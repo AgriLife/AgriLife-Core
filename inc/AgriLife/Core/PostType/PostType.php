@@ -2,7 +2,7 @@
 namespace AgriLife\Core\PostType;
 
 /**
- * The Post Type creater
+ * The Post Type creator
  * @package AgriLife-Core
  * @since 1.0.0
  */
