@@ -20,17 +20,17 @@ class PostTypeArgParser extends Parser {
 
 	protected function set_default() {
 
-	$default = array(
-		'description' => '',
-		'public' => true,
-		'exclude_from_search' => false,
-		'show_in_nav_menus' => true,
-		'menu_position' => 26,
-		'menu_icon' => null,
-		'capability_type' => 'post',
-		'supports' => array( 'title', 'editor' ),
-		'has_archive' => true,
-	);
+		$default = array(
+			'description' => '',
+			'public' => true,
+			'exclude_from_search' => false,
+			'show_in_nav_menus' => true,
+			'menu_position' => 26,
+			'menu_icon' => null,
+			'capability_type' => 'post',
+			'supports' => array( 'title', 'editor' ),
+			'has_archive' => true,
+		);
 
 		$this->default = $default;
 
