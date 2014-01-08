@@ -1,12 +1,35 @@
 <?php
 namespace AgriLife\Core\Taxonomy;
 
+/**
+ * The Taxonomy creator
+ * @package AgriLife-Core
+ * @since 1.0.0
+ */
 class Taxonomy {
 
+	/**
+	 * The plugin slug. Used for i10n
+	 * @var string
+	 */
 	protected $plugin_slug;
 
+	/**
+	 * The post type(s) to be attached
+	 * @var string|array
+	 */
+	private $post_type;
+
+	/**
+	 * The labels array, ready to be passed to the taxonomy arguments
+	 * @var array
+	 */
 	private $labels_ready;
 
+	/**
+	 * The taxonomy arguments, ready to be passed to the registration method
+	 * @var array
+	 */
 	private $args_ready;
 
 	public function __construct( $slug, $object, $labels, $args ) {
@@ -21,6 +44,11 @@ class Taxonomy {
 
 	}
 
+	/**
+	 * Sets up the labels array
+	 * @param  object $passed The taxonomy label object
+	 * @return array          The labels array
+	 */
 	private function setup_labels( $passed ) {
 
 		$passed_labels = $passed->get_parsed();
@@ -48,6 +76,11 @@ class Taxonomy {
 
 	}
 
+	/**
+	 * Sets up the taxonomy arguments
+	 * @param  object $passed The taxonomy arguments object
+	 * @return array          The taxonomy arguments
+	 */
 	private function setup_args( $passed ) {
 
 		$passed_args = $passed->get_parsed();
@@ -66,6 +99,11 @@ class Taxonomy {
 
 	}
 
+	/**
+	 * Regsiters the taxonomy with WordPress
+	 * @param  string $slug 		The taxonomy slug
+	 * @return object|WP_Error  The registered taxonomy object or error object
+	 */
 	private function register_taxonomy( $slug ) {
 
 		return register_taxonomy( $slug, $this->post_type, $this->args_ready );

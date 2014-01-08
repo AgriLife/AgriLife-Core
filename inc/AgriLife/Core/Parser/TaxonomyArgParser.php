@@ -3,6 +3,11 @@ namespace AgriLife\Core\Parser;
 
 use \AgriLife\Core\Parser\Parser;
 
+/**
+ * Parses the Custom Taxonomy arguments
+ * @package AgriLife-Core
+ * @since 1.0.0
+ */
 class TaxonomyArgParser extends Parser {
 
 	public function __construct( $passed = array() ) {

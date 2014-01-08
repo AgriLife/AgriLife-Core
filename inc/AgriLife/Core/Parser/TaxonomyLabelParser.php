@@ -3,6 +3,11 @@ namespace AgriLife\Core\Parser;
 
 use \AgriLife\Core\Parser\Parser;
 
+/**
+ * Parses the singular and plural names for Custom Taxonomies
+ * @package AgriLife-Core
+ * @since 1.0.0
+ */
 class TaxonomyLabelParser extends Parser {
 
 	public function __construct( array $passed ) {
