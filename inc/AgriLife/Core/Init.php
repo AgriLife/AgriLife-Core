@@ -9,7 +9,7 @@ class Init extends PluginBase {
 
 	public function init() {
 
-		$this->plugin_slug = 'agrilife-core';
+		self::$plugin_slug = 'agrilife-core';
 
 	}
 

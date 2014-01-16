@@ -1,7 +1,7 @@
 {
     "name": "agrilife/core",
     "description": "Core functionality plugin for Texas A&M AgriLife sites",
-    "license": "GPL2+",
+    "license": "GPL-2.0",
     "authors": [
         {
             "name": "J. Aaron Eaton",
@@ -9,8 +9,24 @@
         }
     ],
     "minimum-stability": "stable",
+	"repositories": [
+		{
+			"type": "package",
+			"package": {
+				"name": "wordpress/unit-tests",
+				"version": "1.0",
+				"source": {
+					"type": "svn",
+					"url": "http://unit-tests.svn.wordpress.org",
+					"reference": "trunk"
+				}
+			}
+		}
+	],
     "require": {
-        "monolog/monolog": "1.1.*"
+        "monolog/monolog": "1.1.*",
+		"phpunit/phpunit": "3.7.*",
+		"wordpress/unit-tests": "1.0"
     },
     "autoload": {
         "psr-0": {
