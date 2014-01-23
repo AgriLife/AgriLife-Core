@@ -48,4 +48,4 @@ js/admin.min.js
 # Ignore dependencies using package control
 js/lib/*
 node_modules
-/vendor/
+vendor
