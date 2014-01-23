@@ -64,7 +64,7 @@ module.exports = (grunt) ->
   @loadNpmTasks 'grunt-contrib-concat'
   @loadNpmTasks 'grunt-contrib-watch'
 
-  @registerTask 'default', ['coffee', 'compass']
+  @registerTask 'default', ['compass', 'concat']
   @registerTask 'develop', ['compass', 'jshint', 'csslint', 'concat']
   @registerTask 'package', ['default', 'cssmin', 'csslint']
 
