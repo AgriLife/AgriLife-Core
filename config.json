@@ -2,6 +2,5 @@
 {
 	"servers" : [ "extension" ],
 	"bower" : false,
-	"grunt" : false,
-	"test" : true
+	"grunt" : false
 }
