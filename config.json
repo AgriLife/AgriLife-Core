@@ -1,4 +1,6 @@
 // Deployment settings
 {
-	"servers" : [ "extension" ]
+	"servers" : [ "extension" ],
+	"bower" : false,
+	"grunt" : false
 }
