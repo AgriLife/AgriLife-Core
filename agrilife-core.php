@@ -25,3 +25,4 @@ register_activation_hook( __FILE__, array( $activate, 'run') );
 $deactivate = new \AgriLife\Core\Deactivate;
 register_deactivation_hook( __FILE__, array( $deactivate, 'run' ) );
 
+$agrilife_options = new \AgriLife\Core\Options();
