@@ -6,8 +6,8 @@ class Options {
 	public function __construct() {
 
 		add_filter( 'acf/options_page/settings', array( $this, 'options_page_settings' ) );
-		$this->create_core_option_fields();
-		$this->create_contact_option_fields();
+		add_action( 'init', array( $this, 'create_core_option_fields' ) );
+		add_action( 'init', array( $this, 'create_contact_option_fields' ) );
 
 	}
 
@@ -22,7 +22,7 @@ class Options {
 
 	}
 
-	private function create_core_option_fields() {
+	public function create_core_option_fields() {
 
 		$fields = array(
 			array(
@@ -69,7 +69,7 @@ class Options {
 
 	}
 
-	private function create_contact_option_fields() {
+	public function create_contact_option_fields() {
 
 		if ( function_exists( 'register_field_group' ) ) {
 
