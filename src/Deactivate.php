@@ -1,23 +1,23 @@
 <?php
-namespace AgriLife\Core\Plugin;
+namespace AgriLife\Core;
 
 /**
- * Plugin activation class
+ * Plugin deactivation class
  * @package AgriLife-Core
  * @since 1.0.0
  */
-class Activate {
+class Deactivate {
 
 	public function run( $network_wide ) {
 
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 			if ( $network_wide ) {
-				$this->activate_network();
+				$this->deactivate_network();
 			} else {
-				$this->activate_single_site();
+				$this->deactivate_single_site();
 			}
 		} else {
-			$this->activate_single_site();
+			$this->deactivate_single_site();
 		}
 
 	}
@@ -27,13 +27,13 @@ class Activate {
 	 * @since 1.0.0
 	 * @return void
 	 */
-	private function activate_network() {
+	private function deactivate_network() {
 
 		$blog_ids = $this->get_blog_ids();
 
 		foreach ( $blog_ids as $id ) {
 			switch_to_blog( $id );
-			$this->activate_single_site();
+			$this->deactivate_single_site();
 		}
 
 		restore_current_blog();
@@ -45,7 +45,7 @@ class Activate {
 	 * @since 1.0.0
 	 * @return void
 	 */
-	private function activate_single_site() {
+	private function deactivate_single_site() {
 
 	}
 
