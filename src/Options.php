@@ -128,7 +128,7 @@ class Options {
 					),
 			);
 
-			$general = apply_filters( 'agrilife/options/contact_general_field', $general );
+			$general = apply_filters( 'agrilife/options/contact_general_fields', $general );
 
 			$physical_address = array(
 				array(
@@ -194,7 +194,7 @@ class Options {
 				),
 			);
 
-			$physical_address = apply_filters( 'agrilife/options/contact_physical_address_field', $physical_address );
+			$physical_address = apply_filters( 'agrilife/options/contact_physical_address_fields', $physical_address );
 
 			$mailing_address = array(
 				array(
@@ -305,7 +305,7 @@ class Options {
 				),
 			);
 
-			$mailing_address = apply_filters( 'agrilife/options/contact_mailing_address_field', $mailing_address );
+			$mailing_address = apply_filters( 'agrilife/options/contact_mailing_address_fields', $mailing_address );
 
 			$default_fields = array_merge( $general, $physical_address, $mailing_address );
 
