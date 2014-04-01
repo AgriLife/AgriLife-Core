@@ -40,6 +40,14 @@ class Options {
 				'default_value' => '',
 				'layout'        => 'vertical',
 			),
+			array (
+				'key' => 'field_533b1d3ca90b5',
+				'label' => 'Main Agency Site',
+				'name' => 'agrilife-main-site',
+				'type' => 'true_false',
+				'message' => '',
+				'default_value' => 0,
+			),
 		);
 
 		if ( function_exists( "register_field_group" ) ) {
