@@ -26,3 +26,6 @@ $deactivate = new \AgriLife\Core\Deactivate;
 register_deactivation_hook( __FILE__, array( $deactivate, 'run' ) );
 
 $agrilife_options = new \AgriLife\Core\Options();
+
+// Add the loop shortcode
+$agrilife_core_shortcode_loop = new \AgriLife\Core\Shortcode\Loop();
