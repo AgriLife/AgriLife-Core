@@ -26,4 +26,9 @@ $deactivate = new \AgriLife\Core\Deactivate;
 register_deactivation_hook( __FILE__, array( $deactivate, 'run' ) );
 
 $agrilife_options = new \AgriLife\Core\Options();
+
 $agrilife_remove_widgets = new \AgriLife\Core\RemoveWidgets();
+
+// Add 'children' shortcode
+$agrilife_core_shortcode_children = new \AgriLife\Core\Shortcode\Children();
+
