@@ -27,8 +27,12 @@ register_deactivation_hook( __FILE__, array( $deactivate, 'run' ) );
 
 $agrilife_options = new \AgriLife\Core\Options();
 
+// Remove unwanted widgets
 $agrilife_remove_widgets = new \AgriLife\Core\RemoveWidgets();
 
 // Add 'children' shortcode
 $agrilife_core_shortcode_children = new \AgriLife\Core\Shortcode\Children();
+
+// Add the loop shortcode
+$agrilife_core_shortcode_loop = new \AgriLife\Core\Shortcode\Loop();
 
