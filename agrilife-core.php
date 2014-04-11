@@ -45,3 +45,7 @@ $agrilife_template_members_only->register();
 $agrilife_template_redirect = new \AgriLife\Core\PageTemplate();
 $agrilife_template_redirect->with_path( AG_CORE_TEMPLATE_PATH )->with_file( 'redirect' )->with_name( 'Redirect' );
 $agrilife_template_redirect->register();
+
+$agrilife_child_list_template = new \AgriLife\Core\PageTemplate();
+$agrilife_child_list_template->with_path( AG_CORE_TEMPLATE_PATH )->with_file( 'children' )->with_name( 'Child Page List' );
+$agrilife_child_list_template->register();
