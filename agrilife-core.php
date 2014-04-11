@@ -16,6 +16,7 @@ define( 'AG_CORE_DIRNAME', 'agrilife-core' );
 define( 'AG_CORE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 define( 'AG_CORE_DIR_FILE', __FILE__ );
 define( 'AG_CORE_DIR_URL', plugin_dir_url( __FILE__ ) );
+define( 'AG_CORE_TEMPLATE_PATH', AG_CORE_DIR_PATH . '/templates' );
 
 // Register plugin activation functions
 $activate = new \AgriLife\Core\Activate;
@@ -38,5 +39,9 @@ $agrilife_core_shortcode_loop = new \AgriLife\Core\Shortcode\Loop();
 
 // Add page templates
 $agrilife_template_members_only = new \AgriLife\Core\PageTemplate();
-$agrilife_template_members_only->with_path( AG_CORE_DIR_PATH . '/templates')->with_file('members-only')->with_name( 'Members Only' );
+$agrilife_template_members_only->with_path(AG_CORE_TEMPLATE_PATH )->with_file('members-only')->with_name( 'Members Only' );
 $agrilife_template_members_only->register();
+
+$agrilife_template_redirect = new \AgriLife\Core\PageTemplate();
+$agrilife_template_redirect->with_path( AG_CORE_TEMPLATE_PATH )->with_file( 'redirect' )->with_name( 'Redirect' );
+$agrilife_template_redirect->register();
