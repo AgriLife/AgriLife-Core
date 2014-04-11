@@ -36,3 +36,7 @@ $agrilife_core_shortcode_children = new \AgriLife\Core\Shortcode\Children();
 // Add the loop shortcode
 $agrilife_core_shortcode_loop = new \AgriLife\Core\Shortcode\Loop();
 
+// Add page templates
+$agrilife_template_members_only = new \AgriLife\Core\PageTemplate();
+$agrilife_template_members_only->with_path( AG_CORE_DIR_PATH . '/templates')->with_file('members-only')->with_name( 'Members Only' );
+$agrilife_template_members_only->register();
