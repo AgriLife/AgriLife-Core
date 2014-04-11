@@ -28,6 +28,9 @@ register_deactivation_hook( __FILE__, array( $deactivate, 'run' ) );
 
 $agrilife_options = new \AgriLife\Core\Options();
 
+// Customize widgets
+$agrilife_core_widgets = new \AgriLife\Core\Widgets();
+
 // Remove unwanted widgets
 $agrilife_remove_widgets = new \AgriLife\Core\RemoveWidgets();
 
