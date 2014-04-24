@@ -138,23 +138,12 @@ class Test_PeopleAPI extends WP_UnitTestCase {
 
 	}
 
-	public function test_GoodHashIsAccepted() {
-
-		$client = $this->getMock( 'SoapClient', null, array( 'https://agrilifepeople.tamu.edu/api/v4.cfc?wsdl' ) );
-		$api = new AgriLife\Core\PeopleAPI( $client );
-		$api->set_hash( $this->getUnitsHash );
-
-		$this->assertEquals( $this->getUnitsHash, $api->get_hash() );
-
-	}
-
 	public function test_BadHashThrowsException() {
 
 		$this->setExpectedException( 'Exception', 'The hash provided was not encoded properly' );
-
-		$client = $this->getMock( 'SoapClient', null, array( 'https://agrilifepeople.tamu.edu/api/v4.cfc?wsdl' ) );
+		$client = $this->getMockFromWsdl( dirname(__FILE__) . '/ALP.wsdl' );
 		$api = new AgriLife\Core\PeopleAPI( $client );
-		$api->set_hash( $this->badGetUnitsHash );
+		$api->get_units( $this->badGetUnitsHash, 2 );
 
 	}
 

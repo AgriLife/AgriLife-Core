@@ -33,7 +33,7 @@ class PeopleAPI {
 	 *
 	 * @throws \Exception If the hash isn't a Base64-encoded string
 	 */
-	public function set_hash( $hash ) {
+	protected function set_hash( $hash ) {
 
 		if ( base64_encode( base64_decode( $hash ) ) != $hash ) {
 			throw new \Exception( 'The hash provided was not encoded properly' );
@@ -68,7 +68,7 @@ class PeopleAPI {
 	/**
 	 * Returns the SoapClient
 	 *
-	 * @return SoapClient
+	 * @return \SoapClient
 	 */
 	public function get_client() {
 
