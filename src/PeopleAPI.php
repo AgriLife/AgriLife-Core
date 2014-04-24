@@ -8,7 +8,7 @@ namespace AgriLife\Core;
 class PeopleAPI {
 
 	/**
-	 * @var SoapClient
+	 * @var \SoapClient
 	 */
 	private $client;
 
