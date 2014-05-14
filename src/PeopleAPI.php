@@ -102,6 +102,25 @@ class PeopleAPI {
 
 	}
 
+	public function get_people( $hash, $unitIDs ) {
+
+		$this->set_hash( $hash );
+
+		$ids = implode( ',', $unitIDs );
+
+		$all_people = $this->client->getPersonnel( 3, $this->hash, null, $ids, null, null, null, null );
+
+		if ( '200' != $all_people['ResultCode'] ) {
+			return false;
+		}
+
+		$payload = $all_people['ResultQuery']->enc_value->data;
+		$parsed = $this->parse_people( $payload );
+
+		return $parsed;
+
+	}
+
 	/**
 	 * Parses the terribly structured array of units from AgriLife People
 	 *
@@ -151,6 +170,49 @@ class PeopleAPI {
 		}
 
 		return $parsed_units;
+
+	}
+
+	protected function parse_people( $raw_people ) {
+
+		$parsed_people = array();
+
+		foreach ( $raw_people as $p ) {
+			$person = new \stdClass();
+
+			$person->firstname = $p[2];
+			$person->middleinitial = $p[3];
+			$person->lastname = $p[4];
+			$person->preferredname = $p[5];
+			$person->emailaddress = $p[6];
+			$person->website = $p[7];
+			$person->blurb = $p[8];
+			$person->picture = $p[9];
+			$person->cv = $p[10];
+			$person->specializations = $this->parse_specializations( $p[16]->data );
+			$person->profile = $p[19];
+			$person->department = $p[20]->data[0][7];
+			$person->title = $p[20]->data[0][4];
+
+			array_push( $parsed_people, $person );
+		}
+
+		return $parsed_people;
+
+	}
+
+	protected function parse_specializations( $data ) {
+
+		if ( empty( $data ) ) {
+			return false;
+		}
+
+		$parsed = array();
+		foreach ( $data as $s ) {
+			array_push( $parsed, $s[0] );
+		}
+
+		return $parsed;
 
 	}
 
