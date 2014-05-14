@@ -1,6 +1,6 @@
 {
 	"servers" : [ "extension", "coals" ],
 	"composer" : true,
-	"bower" : true,
-	"grunt" : true
+	"bower" : false,
+	"grunt" : false
 }
