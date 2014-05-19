@@ -26,8 +26,6 @@ register_activation_hook( __FILE__, array( $activate, 'run') );
 $deactivate = new \AgriLife\Core\Deactivate;
 register_deactivation_hook( __FILE__, array( $deactivate, 'run' ) );
 
-$agrilife_options = new \AgriLife\Core\Options();
-
 // Customize widgets
 $agrilife_core_widgets = new \AgriLife\Core\Widgets();
 
@@ -52,3 +50,5 @@ $agrilife_template_redirect->register();
 $agrilife_child_list_template = new \AgriLife\Core\PageTemplate();
 $agrilife_child_list_template->with_path( AG_CORE_TEMPLATE_PATH )->with_file( 'children' )->with_name( 'Child Page List' );
 $agrilife_child_list_template->register();
+
+$agrilife_core_fields = new \AgriLife\Core\CustomFields( 'Agency Details', AG_CORE_DIR_PATH . '/fields' );
