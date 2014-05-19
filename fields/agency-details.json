@@ -1,0 +1,164 @@
+{
+    "key": "group_537a64737c07e",
+    "title": "Agency Details",
+    "fields": [
+        {
+            "key": "field_537a6aaeddab8",
+            "label": "Main Agency Site",
+            "name": "agrilife-main-site",
+            "prefix": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "message": "Is this the main site for a system entity?",
+            "default_value": 0
+        },
+        {
+            "key": "field_537a6482bbb80",
+            "label": "Agency Affiliation",
+            "name": "agrilife-agency",
+            "prefix": "",
+            "type": "checkbox",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "choices": {
+                "ext": "Extension",
+                "res": "Research",
+                "col": "College",
+                "tvmdl": "TVMDL",
+                "tfs": "TFS"
+            },
+            "default_value": "",
+            "layout": "vertical"
+        },
+        {
+            "key": "field_537a7a8367fce",
+            "label": "Extension Type",
+            "name": "agrilife-extension-type",
+            "prefix": "",
+            "type": "radio",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                {
+                    "rule_rule_0": {
+                        "field": "field_537a6482bbb80",
+                        "operator": "==",
+                        "value": "ext"
+                    },
+                    "537a7b468b014": {
+                        "field": "field_537a6482bbb80",
+                        "operator": "!=",
+                        "value": "res"
+                    },
+                    "537a7b4b8b015": {
+                        "field": "field_537a6482bbb80",
+                        "operator": "!=",
+                        "value": "col"
+                    },
+                    "537a7b4e8b016": {
+                        "field": "field_537a6482bbb80",
+                        "operator": "!=",
+                        "value": "tvmdl"
+                    },
+                    "537a7b528b017": {
+                        "field": "field_537a6482bbb80",
+                        "operator": "!=",
+                        "value": "tfs"
+                    }
+                }
+            ],
+            "choices": {
+                "typical": "Typical",
+                "4h": "4-H",
+                "county": "County Office",
+                "county-tce": "County TCE Office",
+                "mg": "Master Gardener Chapter",
+                "mn": "Master Naturalist Chapter",
+                "sg": "Sea Grant"
+            },
+            "other_choice": 0,
+            "save_other_choice": 0,
+            "default_value": "",
+            "layout": "vertical"
+        },
+        {
+            "key": "field_537a7b93b7be7",
+            "label": "County Name",
+            "name": "agrilife-county-name",
+            "prefix": "",
+            "type": "select",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                {
+                    "rule_0": {
+                        "field": "field_537a6482bbb80",
+                        "operator": "==",
+                        "value": "ext"
+                    },
+                    "537a7c30b7be8": {
+                        "field": "field_537a6482bbb80",
+                        "operator": "!=",
+                        "value": "res"
+                    },
+                    "537a7c36b7be9": {
+                        "field": "field_537a6482bbb80",
+                        "operator": "!=",
+                        "value": "col"
+                    },
+                    "537a7c3ab7bea": {
+                        "field": "field_537a6482bbb80",
+                        "operator": "!=",
+                        "value": "tvmdl"
+                    },
+                    "537a7c48b7beb": {
+                        "field": "field_537a6482bbb80",
+                        "operator": "!=",
+                        "value": "tfs"
+                    },
+                    "537a7c4eb7bed": {
+                        "field": "field_537a7a8367fce",
+                        "operator": "==",
+                        "value": "county"
+                    }
+                },
+                {
+                    "rule_0": {
+                        "field": "field_537a7a8367fce",
+                        "operator": "==",
+                        "value": "county-tce"
+                    }
+                }
+            ],
+            "choices": {
+                "brazos": "Brazos"
+            },
+            "default_value": "",
+            "allow_null": 0,
+            "multiple": 0,
+            "ui": 1,
+            "ajax": 1,
+            "placeholder": "",
+            "disabled": 0,
+            "readonly": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": ""
+}
