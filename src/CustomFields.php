@@ -9,6 +9,11 @@ class CustomFields {
 		$this->group = $group;
 		$this->path  = $path;
 
+		// Create the Options page
+//		add_filter( 'acf/options_page/settings', array( $this, 'create_options_page' ) );
+//		add_action( 'plugins_loaded', array( $this, 'create_options_page' ) );
+
+		// Allow JSON to be written into a plugin
 		add_action( 'acf/update_field_group', array( $this, 'update_field_group' ), 10, 1 );
 		add_action( 'acf/duplicate_field_group', array( $this, 'update_field_group' ), 10, 1 );
 		add_action( 'acf/untrash_field_group', array( $this, 'update_field_group' ), 10, 1 );
@@ -16,6 +21,20 @@ class CustomFields {
 		add_action( 'acf/delete_field_group', array( $this, 'delete_field_group' ), 10, 1 );
 		add_action( 'acf/include_fields', array( $this, 'include_fields' ), 10, 1 );
 
+	}
+
+	public function create_options_page() {
+
+		acf_update_setting( 'show_options_page', true );
+		acf_add_options_page(array(
+			'page_title' 	=> __('Options','acf'),
+			'menu_title'	=> __('Options','acf'),
+			'menu_slug' 	=> 'acf-options',
+			'capability'	=> 'edit_posts',
+			'parent_slug'	=> '',
+			'position'		=> false,
+			'icon_url'		=> false,
+		));
 	}
 
 	/*

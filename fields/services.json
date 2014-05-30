@@ -1,0 +1,39 @@
+{
+    "key": "group_537f755a8139e",
+    "title": "Services",
+    "fields": [
+        {
+            "key": "field_537f761f4ef6a",
+            "label": "Google Custom Search ID",
+            "name": "google-search-id",
+            "prefix": "",
+            "type": "text",
+            "instructions": "Enter a Google Custom Search Engine ID or leave blank to use the default AgriLife search.",
+            "required": 0,
+            "conditional_logic": 0,
+            "default_value": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "maxlength": "",
+            "formatting": "none",
+            "readonly": 0,
+            "disabled": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "acf-options"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": ""
+}
