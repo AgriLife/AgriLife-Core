@@ -65,3 +65,7 @@ function core_test() {
 		'icon_url' => false,
 	));
 }
+// All child plugins should hook into 'agrilife_core_init' where necessary
+add_action( 'plugins_loaded', function() {
+	do_action('agrilife_core_init');
+}, 15);
