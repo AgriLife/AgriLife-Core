@@ -10,8 +10,8 @@ class CustomFields {
 		$this->path  = $path;
 
 		// Create the Options page
-//		add_filter( 'acf/options_page/settings', array( $this, 'create_options_page' ) );
-//		add_action( 'plugins_loaded', array( $this, 'create_options_page' ) );
+		add_filter( 'acf/options_page/settings', array( $this, 'create_options_page' ) );
+		add_action( 'plugins_loaded', array( $this, 'create_options_page' ) );
 
 		// Allow JSON to be written into a plugin
 		add_action( 'acf/update_field_group', array( $this, 'update_field_group' ), 10, 1 );

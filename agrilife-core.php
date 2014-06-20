@@ -53,18 +53,7 @@ $agrilife_child_list_template->register();
 
 $agrilife_core_fields = new \AgriLife\Core\CustomFields( 'Agency Details', AG_CORE_DIR_PATH . '/fields' );
 $agrilife_service_fields = new \AgriLife\Core\CustomFields( 'Services', AG_CORE_DIR_PATH . '/fields' );
-//add_action('admin_menu', 'core_test' );
-function core_test() {
-	acf_add_options_page(array(
-		'page_title' => 'Options',
-		'menu_title' => 'Options',
-		'menu_slug' => 'acf-options',
-		'capability' => 'edit_posts',
-		'parent_slug' => '',
-		'position' => false,
-		'icon_url' => false,
-	));
-}
+
 // All child plugins should hook into 'agrilife_core_init' where necessary
 add_action( 'plugins_loaded', function() {
 	do_action('agrilife_core_init');
