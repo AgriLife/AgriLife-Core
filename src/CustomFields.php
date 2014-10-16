@@ -21,6 +21,9 @@ class CustomFields {
 		add_action( 'acf/delete_field_group', array( $this, 'delete_field_group' ), 10, 1 );
 		add_action( 'acf/include_fields', array( $this, 'include_fields' ), 10, 1 );
 
+        // Hide ACF menu from all users
+        add_filter('acf/settings/show_admin', array( $this, 'my_acf_hide_admin'));
+
 	}
 
 	public function create_options_page() {
@@ -193,4 +196,11 @@ class CustomFields {
 		}
 
 	}
+
+    function my_acf_hide_admin() {
+
+        // Only show ACF admin to Super Users
+        return current_user_can('manage_network');
+
+    }
 }
