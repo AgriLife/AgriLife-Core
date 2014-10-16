@@ -30,10 +30,10 @@ class CustomFields {
 
 		acf_update_setting( 'show_options_page', true );
 		acf_add_options_page(array(
-			'page_title' 	=> __('Options','acf'),
-			'menu_title'	=> __('Options','acf'),
+			'page_title' 	=> __('Theme Options','acf'),
+			'menu_title'	=> __('Theme Options','acf'),
 			'menu_slug' 	=> 'acf-options',
-			'capability'	=> 'edit_posts',
+			'capability'	=> 'manage_options',
 			'parent_slug'	=> '',
 			'position'		=> false,
 			'icon_url'		=> false,
