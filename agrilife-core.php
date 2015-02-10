@@ -38,9 +38,12 @@ $agrilife_core_shortcode_children = new \AgriLife\Core\Shortcode\Children();
 // Add the loop shortcode
 $agrilife_core_shortcode_loop = new \AgriLife\Core\Shortcode\Loop();
 
+// Add the loop shortcode
+$agrilife_core_shortcode_loop = new \AgriLife\Core\Accessibility();
+
 // Add page templates
 $agrilife_template_members_only = new \AgriLife\Core\PageTemplate();
-$agrilife_template_members_only->with_path(AG_CORE_TEMPLATE_PATH )->with_file('members-only')->with_name( 'Members Only' );
+$agrilife_template_members_only->with_path( AG_CORE_TEMPLATE_PATH )->with_file('members-only')->with_name( 'Members Only' );
 $agrilife_template_members_only->register();
 
 $agrilife_template_redirect = new \AgriLife\Core\PageTemplate();
