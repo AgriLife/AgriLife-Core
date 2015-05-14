@@ -16,7 +16,7 @@ define( 'AG_CORE_DIRNAME', 'agrilife-core' );
 define( 'AG_CORE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 define( 'AG_CORE_DIR_FILE', __FILE__ );
 define( 'AG_CORE_DIR_URL', plugin_dir_url( __FILE__ ) );
-define( 'AG_CORE_TEMPLATE_PATH', AG_CORE_DIR_PATH . 'templates' );
+define( 'AG_CORE_TEMPLATE_PATH', AG_CORE_DIR_PATH . '/templates' );
 
 // Register plugin activation functions
 $activate = new \AgriLife\Core\Activate;
