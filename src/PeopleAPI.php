@@ -189,7 +189,7 @@ class PeopleAPI {
 			$person->blurb = $p[8];
 			$person->picture = $p[9];
 			$person->cv = $p[10];
-			$person->specializations = $this->parse_specializations( $p[16]->data );
+			$person->specializations = $this->parse_specializations( $p[17]->data );
 			$person->profile = $p[19];
 			$person->department = $p[20]->data[0][7];
 			$person->title = $p[20]->data[0][4];
