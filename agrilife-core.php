@@ -53,22 +53,18 @@ $agrilife_template_redirect->register();
 $agrilife_child_list_template = new \AgriLife\Core\PageTemplate();
 $agrilife_child_list_template->with_path( AG_CORE_TEMPLATE_PATH )->with_file( 'children' )->with_name( 'Child Page List' );
 $agrilife_child_list_template->register();
-
-if ( class_exists( 'Acf' ) ) {
-    $agrilife_core_fields = new \AgriLife\Core\CustomFields( 'Agency Details', AG_CORE_DIR_PATH . '/fields' );
-    $agrilife_service_fields = new \AgriLife\Core\CustomFields( 'Services', AG_CORE_DIR_PATH . '/fields' );
-} else {
-    add_action( 'admin_notices', 'agrilife_acf_notice' );
-}
 // All child plugins should hook into 'agrilife_core_init' where necessary
-add_action( 'plugins_loaded', function() {
-	do_action('agrilife_core_init');
-}, 15);
 
-function agrilife_acf_notice() {
-    ?>
-    <div class="error">
-        <p><?php _e( 'Please activate Advanced Custom Fields 5', 'agrilife-core' ); ?></p>
-    </div>
-<?php
-}
+add_action( 'plugins_loaded', function() {
+    if ( class_exists( 'acf' ) ) {
+        $agrilife_core_fields = new \AgriLife\Core\CustomFields( 'Agency Details', AG_CORE_DIR_PATH . '/fields' );
+        $agrilife_service_fields = new \AgriLife\Core\CustomFields( 'Services', AG_CORE_DIR_PATH . '/fields' );
+        do_action('agrilife_core_init');
+    }
+}, 15);
+add_action( 'admin_init', function(){
+    if ( !class_exists( 'acf' ) ) {
+        deactivate_plugins( plugin_basename( __FILE__ ) );
+        wp_die( 'The AgriLife Core plugin requires Advanced Custom Fields 5. <br><a href="' . str_replace('?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']) . '">Return to Plugins page.</a>' );
+    }
+});
