@@ -42,6 +42,7 @@ cache
 
 # No need to version control compiled files
 css/*.css
+css/*.css.map
 js/public.min.js
 js/admin.min.js
 

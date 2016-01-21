@@ -84,6 +84,7 @@ class PageTemplate {
 
 	public function register() {
 
+		$filters['admin_init']       = add_filter( 'admin_init', array( $this, 'add_to_cache' ) );
 		$filters['dropdown']         = add_filter( 'page_attributes_dropdown_pages_args', array( $this, 'add_to_cache' ) );
 		$filters['post_data']        = add_filter( 'wp_insert_post_data', array( $this, 'add_to_cache' ) );
 		$filters['template_include'] = add_filter( 'template_include', array( $this, 'view_project_template' ) );
