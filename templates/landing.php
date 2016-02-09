@@ -3,6 +3,14 @@
  * Template Name: Landing Page
  */
 
+/** Notes:
+ * This template relies on two image sizes:
+ * 1. Landing Template Slider: 1024 x 576
+ *    This size must be set on the Soliloquy Slider's settings page
+ * 2. Landing Template Thumbnail: 483 x 272
+ *    Uploaded images must be this size or larger.
+*/
+
 // Remove post content
 remove_action( 'genesis_entry_content', 'genesis_do_post_content' );
 
