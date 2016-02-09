@@ -8,22 +8,83 @@ namespace AgriLife\Core;
 class PeopleAPI {
 
 	/**
-	 * @var \SoapClient
-	 */
-	private $client;
-
-	/**
 	 * @var string
 	 */
 	private $hash;
 
 	/**
-	 * @param \SoapClient $client
-	 */
-	public function __construct( \SoapClient $client ) {
+	* Request API Data
+	*
+	* @param string $method
+	* @param array $data
+	*/
+	protected function make_people_api_call( $method, $data ){
 
-		$this->set_client( $client );
+	  $url = 'https://agrilifepeople.tamu.edu/api/';
 
+	  switch ($method){
+	    
+	    case "units" :
+	      $data = array_merge( array(
+	        'limit_to_active' =>  0,
+	        'entity_id' => null,
+	        'parent_unit_id' => null,
+	        'search_string' => null,
+	        'limited_units' => null,
+	        'exclude_units' => null,
+	      ), $data );
+	      break;
+	      
+	    case "people" :
+	      $data = array_merge( array(
+	        'person_active_status' => null,
+	        'restrict_to_public_only' => 1,
+	        'search_specializations' => null,
+	        'limited_units' => null,
+	        'limited_entity' => null,
+	        'limited_personnel' => null,
+	        'limited_roles' => null,
+	        'include_directory_profile' => 0,
+	        'include_specializations' => 1,
+	      ), $data );
+	      break;
+	      
+	    default: 
+	      exit("$function is not defined in the switch statement");
+	  }
+
+	  $url .= $method;
+
+	  if (!empty($data))
+	    $url = sprintf("%s?%s", $url, http_build_query($data));
+	  
+	  $curl = curl_init();
+	  curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+	  curl_setopt($curl, CURLOPT_URL, $url);
+	  curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+	  
+	  $curl_response = curl_exec($curl);
+	  if ($curl_response === false) {
+	    $info = curl_getinfo($curl);
+	    curl_close($curl);
+	    
+	    echo "<pre>Error occurred during curl exec.<br/>Additional info:<br/>";
+	    echo "Curl Response:<br/>";
+	    print_r($curl_response);
+	    echo "Info:<br/>";
+	    print_r($info);
+	    die('</pre>');
+	  }
+	  
+	  $response = array(
+	    'url' => $url,
+	    'json' => json_decode($curl_response, true),
+	    'raw' => $curl_response,
+	  );
+	  
+	  curl_close($curl);
+	  
+	  return $response;
 	}
 
 	/**
@@ -55,28 +116,6 @@ class PeopleAPI {
 	}
 
 	/**
-	 * Sets the SoapClient object
-	 *
-	 * @param $client
-	 */
-	protected function set_client( $client ) {
-
-		$this->client = $client;
-
-	}
-
-	/**
-	 * Returns the SoapClient
-	 *
-	 * @return \SoapClient
-	 */
-	public function get_client() {
-
-		return $this->client;
-
-	}
-
-	/**
 	 * Retrieves the units from the web service and sends them to the parser
 	 * @param string $hash
 	 * @param int $entity_id
@@ -87,18 +126,29 @@ class PeopleAPI {
 
 		$this->set_hash( $hash );
 
-		$all_units = $this->client->getUnits( 3, $this->hash, null, $entity_id, null, null, null, null );
+		$data = array(
+			'validation_key' => $hash,
+			'site_id' => 3,
+			'limited_units' => implode( ',', $entity_id ),
+		);
 
-		if ( '200' != $all_units['ResultCode'] ) {
+		$apidata = $this->make_people_api_call( 'units', $data );
+		$results = $apidata['json'];
+
+		if ( $results['status'] == 200 ) {
+
+			$payload = $results['units'];
+
+			$parsed = $this->parse_units( $payload );
+
+			return $parsed;
+
+		} else {
+
 			// @todo Have a log message here
 			return false;
+
 		}
-
-		$payload = $all_units['ResultQuery']->enc_value->data;
-
-		$parsed = $this->parse_units( $payload );
-
-		return $parsed;
 
 	}
 
@@ -106,18 +156,26 @@ class PeopleAPI {
 
 		$this->set_hash( $hash );
 
-		$ids = implode( ',', $unitIDs );
+		$data = array(
+			'validation_key' => $hash,
+			'site_id' => 3,
+			'limited_units' => implode( ',', $unitIDs ),
+		);
 
-		$all_people = $this->client->getPersonnel( 3, $this->hash, null, $ids, null, null, null, null );
+		$apidata = $this->make_people_api_call( 'people', $data );
+		$results = $apidata['json'];
 
-		if ( '200' != $all_people['ResultCode'] ) {
+		if ( $results['status'] == 200 ) {
+
+			$payload = $results['people'];
+			$parsed = $this->parse_people( $payload );
+			return $parsed;
+
+		} else {
+
 			return false;
+
 		}
-
-		$payload = $all_people['ResultQuery']->enc_value->data;
-		$parsed = $this->parse_people( $payload );
-
-		return $parsed;
 
 	}
 
@@ -134,34 +192,33 @@ class PeopleAPI {
 
 		foreach ( $raw_units as $u ) {
 			$unit = new \stdClass();
-			$unit->id = $u[0];
-			$unit->number = $u[1];
-			$unit->name = $u[2];
-			$unit->parentunitid = $u[3];
-			$unit->districtid = $u[4];
-			$unit->regionid = $u[5];
-			$unit->districtname = $u[6];
-			$unit->regionname = $u[7];
-			$unit->url = $u[8];
-			$unit->phone = $u[9];
-			$unit->fax = $u[10];
-			$unit->email = $u[11];
-			$unit->address1 = $u[12];
-			$unit->address2 = $u[13];
-			$unit->city = $u[14];
-			$unit->state = $u[15];
-			$unit->zip = $u[16];
-			$unit->mailingaddress1 = $u[17];
-			$unit->mailingaddress2 = $u[18];
-			$unit->mailstop = $u[19];
-			$unit->mailingcity = $u[20];
-			$unit->mailingstate = $u[21];
-			$unit->mailingzip = $u[22];
+			$unit->id = $u['unit_id'];
+			$unit->name = $u['unit_name'];
+			$unit->parentunitid = $u['parent_unit_name'];
+			$unit->districtid = $u['extension'][0]['district_id'];
+			$unit->regionid = $u['extension'][0]['region_id'];
+			$unit->districtname = $u['extension'][0]['district_name'];
+			$unit->regionname = $u['extension'][0]['region_name'];
+			$unit->url = $u['website'];
+			$unit->phone = $u['phone_number'];
+			$unit->fax = $u['fax_number'];
+			$unit->email = $u['email_address'];
+			$unit->address1 = $u['physical_address_1'];
+			$unit->address2 = $u['physical_address_2'];
+			$unit->city = $u['physical_address_city'];
+			$unit->state = $u['physical_address_state'];
+			$unit->zip = $u['physical_address_postal_code'];
+			$unit->mailingaddress1 = $u['mailing_address_1'];
+			$unit->mailingaddress2 = $u['mailing_address_2'];
+			$unit->mailstop = $u['mailstop'];
+			$unit->mailingcity = $u['mailing_address_city'];
+			$unit->mailingstate = $u['mailing_address_state'];
+			$unit->mailingzip = $u['mailing_address_postal_code'];
 
 			// Some units don't have county data
-			$county_data = $u[23]->data;
-			if ( array_key_exists( 0, $county_data ) ) {
-				$unit->county = $county_data[0][2];
+			$county_data = $u['counties'][0];
+			if ( array_key_exists( 'county_name', $county_data ) ) {
+				$unit->county = $county_data[0]['county_name'];
 			} else {
 				$unit->county = null;
 			}
@@ -180,19 +237,19 @@ class PeopleAPI {
 		foreach ( $raw_people as $p ) {
 			$person = new \stdClass();
 
-			$person->firstname = $p[2];
-			$person->middleinitial = $p[3];
-			$person->lastname = $p[4];
-			$person->preferredname = $p[5];
-			$person->emailaddress = $p[6];
-			$person->website = $p[7];
-			$person->blurb = $p[8];
-			$person->picture = $p[9];
-			$person->cv = $p[10];
-			$person->specializations = $this->parse_specializations( $p[17]->data );
-			$person->profile = $p[19];
-			$person->department = $p[20]->data[0][7];
-			$person->title = $p[20]->data[0][4];
+			$person->firstname = $p['first_name'];
+			$person->middleinitial = $p['middle_initial'];
+			$person->lastname = $p['last_name'];
+			$person->preferredname = $p['preferred_name'];
+			$person->emailaddress = $p['email_address'];
+			$person->website = $p['directory_profile'][0]['_links'][0]['website'];
+			$person->picture = $p['directory_profile'][0]['_links'][0]['picture'];
+			$person->cv = $p['directory_profile'][0]['_links'][0]['link_cv'];
+			$person->specializations = $this->parse_specializations( $p['specializations'] );
+			$person->profile = $p['directory_profle'][0]['_links'][0]['website'];
+			$person->links = $p['directory_profle'][0]['_links'];
+			$person->department = $p['positions'][0]['unit_name'];
+			$person->title = $p['positions'][0]['position_title'];
 
 			array_push( $parsed_people, $person );
 		}
@@ -209,7 +266,7 @@ class PeopleAPI {
 
 		$parsed = array();
 		foreach ( $data as $s ) {
-			array_push( $parsed, $s[0] );
+			array_push( $parsed, strtolower($s) );
 		}
 
 		return $parsed;
