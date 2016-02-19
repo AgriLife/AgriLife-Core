@@ -46,6 +46,7 @@ class PeopleAPI {
 	        'limited_roles' => null,
 	        'include_directory_profile' => 0,
 	        'include_specializations' => 1,
+          'include_affiliated' => 0,
 	      ), $data );
 	      break;
 	      
@@ -160,6 +161,7 @@ class PeopleAPI {
 			'validation_key' => $hash,
 			'site_id' => 3,
 			'limited_units' => implode( ',', $unitIDs ),
+      'include_affiliated' => 1,
 		);
 
 		$apidata = $this->make_people_api_call( 'people', $data );
