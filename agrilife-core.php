@@ -55,7 +55,7 @@ $agrilife_child_list_template->with_path( AG_CORE_TEMPLATE_PATH )->with_file( 'c
 $agrilife_child_list_template->register();
 
 $agrilife_template_landing = new \AgriLife\Core\PageTemplate();
-$agrilife_template_landing->with_path( AG_CORE_TEMPLATE_PATH )->with_file( 'landing' )->with_name( 'Landing Page' );
+$agrilife_template_landing->with_path( AG_CORE_TEMPLATE_PATH )->with_file( 'landing' )->with_name( 'Landing Page 2' );
 $agrilife_template_landing->register();
 
 // All child plugins should hook into 'agrilife_core_init' where necessary
