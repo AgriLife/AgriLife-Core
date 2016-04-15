@@ -67,7 +67,7 @@ module.exports = (grunt) ->
 
   @registerTask 'default', ['compass', 'concat']
   @registerTask 'develop', ['compass', 'jshint', 'csslint', 'concat']
-  @registerTask 'package', ['default', 'cssmin', 'csslint']
+  @registerTask 'package', ['default', 'cssmin', 'csslint', 'jshint']
 
   @event.on 'watch', (action, filepath) =>
     @log.writeln('#{filepath} has #{action}')
