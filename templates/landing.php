@@ -75,8 +75,8 @@ function repeating_content()
     if ( get_field( 'repeating_content' ) && have_rows( 'repeating_content' ) ) { ?>
         <div class="row repeating-content"><?php
         while( have_rows( 'repeating_content' ) ): the_row();
-            $left = get_sub_field('left')[0];
-            $right = get_sub_field('right')[0];
+            $left = array_shift(get_sub_field('left'));
+            $right = array_shift(get_sub_field('right'));
             $imgpattern = '/.(jpeg|jpg|png|gif)$/i';
             $imgreplacement = '-483x272.$1'; ?>
             <div class="row">
