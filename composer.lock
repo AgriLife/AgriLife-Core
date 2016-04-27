@@ -508,7 +508,7 @@
             "version": "1.0",
             "source": {
                 "type": "svn",
-                "url": "http://unit-tests.svn.wordpress.org",
+                "url": "https://unit-tests.svn.wordpress.org",
                 "reference": "trunk"
             },
             "type": "library"
