@@ -1,0 +1,65 @@
+# RECOMMENDED BY WPENGINE
+*~
+.DS_Store
+.svn
+.cvs
+*.bak
+*.swp
+Thumbs.db
+
+# large/disallowed file types
+# a CDN should be used for these
+*.hqx
+*.bin
+*.exe
+*.dll
+*.deb
+*.dmg
+*.iso
+*.img
+*.msi
+*.msp
+*.msm
+*.mid
+*.midi
+*.kar
+*.mp3
+*.ogg
+*.m4a
+*.ra
+*.3gpp
+*.3gp
+*.mp4
+*.mpeg
+*.mpg
+*.mov
+*.webm
+*.flv
+*.m4v
+*.mng
+*.asx
+*.asf
+*.wmv
+*.avi
+
+# Directories that may or may not exist in repo AND should not be on the server
+package.json
+config.rb
+node_modules
+.sass-cache
+*.md
+*.txt
+*.ai
+*.scss
+*.coffee
+.gitignore
+LICENSE
+LICENSE-MIT
+gruntfile.js
+Gruntfile.js
+werker.yml
+.editorconfig
+css/src
+js/src
+# Prevent Composer files from being loaded if they are only used for PHP5.6+
+vendor/composer/autoload_static.php
