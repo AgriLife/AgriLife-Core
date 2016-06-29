@@ -58,6 +58,10 @@ $agrilife_template_landing = new \AgriLife\Core\PageTemplate();
 $agrilife_template_landing->with_path( AG_CORE_TEMPLATE_PATH )->with_file( 'landing' )->with_name( 'Landing Page 2' );
 $agrilife_template_landing->register();
 
+$agrilife_template_flexiblecolumns = new \AgriLife\Core\PageTemplate();
+$agrilife_template_flexiblecolumns->with_path( AG_CORE_TEMPLATE_PATH )->with_file( 'flexiblecolumns' )->with_name( 'Flexible Columns' );
+$agrilife_template_flexiblecolumns->register();
+
 // All child plugins should hook into 'agrilife_core_init' where necessary
 
 add_action( 'plugins_loaded', function() {
@@ -65,6 +69,7 @@ add_action( 'plugins_loaded', function() {
         $agrilife_core_fields = new \AgriLife\Core\CustomFields( 'Agency Details', AG_CORE_DIR_PATH . '/fields' );
         $agrilife_service_fields = new \AgriLife\Core\CustomFields( 'Services', AG_CORE_DIR_PATH . '/fields' );
         require_once(AG_CORE_DIR_PATH . '/fields/landing-details.php');
+        require_once(AG_CORE_DIR_PATH . '/fields/flexiblecolumns.php');
         do_action('agrilife_core_init');
     }
 }, 15);
