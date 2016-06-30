@@ -177,7 +177,7 @@ acf_add_local_field_group(array (
             array (
                 'param' => 'page_template',
                 'operator' => '==',
-                'value' => '/srv/www/wordpress-default/wp-content/plugins/AgriLife-Core/templates/flexiblecolumns.php',
+                'value' => AG_CORE_TEMPLATE_PATH . '/flexiblecolumns.php',
             ),
         ),
     ),
