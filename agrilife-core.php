@@ -58,10 +58,6 @@ $agrilife_template_landing = new \AgriLife\Core\PageTemplate();
 $agrilife_template_landing->with_path( AG_CORE_TEMPLATE_PATH )->with_file( 'landing' )->with_name( 'Landing Page 2' );
 $agrilife_template_landing->register();
 
-$agrilife_template_flexiblecolumns = new \AgriLife\Core\PageTemplate();
-$agrilife_template_flexiblecolumns->with_path( AG_CORE_TEMPLATE_PATH )->with_file( 'flexiblecolumns' )->with_name( 'Flexible Columns' );
-$agrilife_template_flexiblecolumns->register();
-
 // All child plugins should hook into 'agrilife_core_init' where necessary
 
 add_action( 'plugins_loaded', function() {
@@ -84,13 +80,47 @@ add_action( 'admin_init', function(){
 if ( function_exists( 'add_image_size' ) ) {
     add_image_size( 'landing-template-slider', 1024, 576, true );
     add_image_size( 'landing-template-thumbnail', 483, 272, true );
+    add_image_size( 'templateflexiblecolumns', 500, 9999 );
 }
 add_filter('image_size_names_choose', 'agrilife_core_image_sizes');
 function agrilife_core_image_sizes($sizes) {
     $addsizes = array(
         "landing-template-slider" => __( "Landing Template Slider"),
-        "landing-template-thumbnail" => __( "Landing Template Thumbnail")
+        "landing-template-thumbnail" => __( "Landing Template Thumbnail"),
+        "templateflexiblecolumns" => __( "Flexible Columns Template Column Image")
     );
     $newsizes = array_merge($sizes, $addsizes);
     return $newsizes;
+}
+
+// Flexible Columns Template
+$agrilife_template_flexiblecolumns = new \AgriLife\Core\PageTemplate();
+$agrilife_template_flexiblecolumns->with_path( AG_CORE_TEMPLATE_PATH )->with_file( 'flexiblecolumns' )->with_name( 'Flexible Columns' );
+$agrilife_template_flexiblecolumns->register();
+
+// Validate images used in columns for custom size
+add_action( 'acf/validate_value/name=columnimage', 'ac_validate_image_sizes', 10, 4 );
+function ac_validate_image_sizes( $valid, $value, $field, $input ){
+
+    // bail early if value is already invalid
+    if( !$valid ) {
+        return $valid;
+    }
+
+    $data = wp_get_attachment_metadata( $value, true );
+    $fullwidth = $data['sizes']['full']['width'];
+
+    $key = array_key_exists( 'templateflexiblecolumns', $data['sizes'] );
+
+    if( !key && $fullwidth > 500 ) {
+
+        // Regenerate thumbnail with custom image size
+        $fullsizepath = get_attached_file( $value );
+        $metadata = wp_generate_attachment_metadata( $value, $fullsizepath );
+        wp_update_attachment_metadata( $value, $metadata );
+
+    }
+
+    return $valid;
+
 }
