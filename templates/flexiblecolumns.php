@@ -22,29 +22,22 @@ function fc_repeating_content()
       ?><div class="row"><?php
 
       $rowname = get_row()['acf_fc_layout'];
-      $type = gettype( $subfield );
+      $content = '';
 
       if( $rowname == 'contact_info' ){
 
-        $content = sprintf( '<div class="small-12 medium-12 large-12 columns"><h3>Contact</h3><p>%s<br>%s<br>%s</p></div>', get_sub_field('name'), get_sub_field('email'), get_sub_field('phone') );
-
-        echo $content;
+        $content = sprintf( '<div class="small-12 medium-12 large-12 columns"><p class="vcard"><span class="fn">%s</span><br><a href="mailto:%s" class="email">%s</a><br><span class="tel">%s</span></p></div>', get_sub_field('name'), get_sub_field('email'), get_sub_field('email'), get_sub_field('phone') );
 
       } else if( $rowname == 'button' ){
 
-        $content = sprintf( '<div class="small-12 medium-12 large-12 columns"><a class="button" href="%s">%s</a></div>', get_sub_field('link'), get_sub_field('text') );
-
-        echo $content;
+        $content = sprintf( '<div class="small-12 medium-12 large-12 columns" style="text-align:%s"><a class="button" href="%s">%s</a></div>', get_sub_field('alignment'), get_sub_field('link'), get_sub_field('text') );
 
       } else if( $rowname == 'full_width' ){
 
-        // Full Width
-        ?><div class="small-12 medium-12 large-12 columns"><?php
-        echo get_sub_field( 'content' );
-        ?></div><?php
+        $content = sprintf( '<div class="small-12 medium-12 large-12 columns">%s</div>', get_sub_field('content') );
 
       } else if( $rowname == 'columns' ){
-        // Columns
+
         $subfield = get_sub_field( 'content' );
         $count = count( $subfield );
         $cols = (12 - 12 % $count) / $count;
@@ -54,34 +47,30 @@ function fc_repeating_content()
           $img = $cell['columnimage'];
           $desc = $cell['description'];
           $link = $cell['link'];
+          $linkopen = $linkclose = '';
+
+          if( $link != '' ){
+            $linkopen = '<a href="' . $link . '" style="display:block">';
+            $linkclose = '</a>';
+          }
 
           if( $heading != '' ){
-            if( $link != '' )
-              $heading = "<a href=\"{$link}\">{$heading}</a>";
-            $heading = "<h3>{$heading}</h3>";
+            $heading = '<h3>' . $heading . '</h3>';
           }
 
           if( $img != '' ){
-            // if full width content layout
-              // if 2 columns, 500px wide
-              // if 3 columns, 304px wide
-            // else
-              // if 2 columns, 334px wide
-              // if 3 columns, 213px wide
-
-            $url = $img['sizes']['templateflexiblecolumns'];
-            $img = "<img src=\"{$url}\" title=\"{$img['title']}\" alt=\"{$img['alt']}\"/>";
-
-            if( $link != '' )
-              $img = "<a href=\"{$link}\">{$img}</a>";
-            $img = "<p>" . $img . "</p>";
+            $img = sprintf( '<img src="%s" alt="%s"/>', $img['sizes']['templateflexiblecolumns'], $img['alt'] );
+            if( $desc != '' )
+              $linkclose .= '<br>';
           }
 
-          echo "<div class=\"small-12 medium-{$cols} large-{$cols} columns\">{$heading}{$img}{$desc}</div>";
+          $content .= sprintf( '<div class="small-12 medium-%s large-%s columns">%s%s%s%s%s</div>', $cols, $cols, $linkopen, $heading, $img, $linkclose, $desc );
 
         }
 
       }
+
+      echo $content;
 
       ?></div><?php
 

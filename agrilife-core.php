@@ -108,11 +108,11 @@ function ac_validate_image_sizes( $valid, $value, $field, $input ){
     }
 
     $data = wp_get_attachment_metadata( $value, true );
-    $fullwidth = $data['sizes']['full']['width'];
 
     $key = array_key_exists( 'templateflexiblecolumns', $data['sizes'] );
+    $gen = preg_match( '/500x\d{1,4}\.\w{2,4}$/', $data['sizes']['templateflexiblecolumns']['file'] );
 
-    if( !key && $fullwidth > 500 ) {
+    if( (!$key || !$gen) && $data['width'] > 500 ) {
 
         // Regenerate thumbnail with custom image size
         $fullsizepath = get_attached_file( $value );
