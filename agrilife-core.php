@@ -80,7 +80,7 @@ add_action( 'admin_init', function(){
 if ( function_exists( 'add_image_size' ) ) {
     add_image_size( 'landing-template-slider', 1024, 576, true );
     add_image_size( 'landing-template-thumbnail', 483, 272, true );
-    add_image_size( 'templateflexiblecolumns', 500, 9999 );
+    add_image_size( 'templateflexiblecolumns', 554, 9999 );
 }
 add_filter('image_size_names_choose', 'agrilife_core_image_sizes');
 function agrilife_core_image_sizes($sizes) {
@@ -110,9 +110,9 @@ function ac_validate_image_sizes( $valid, $value, $field, $input ){
     $data = wp_get_attachment_metadata( $value, true );
 
     $key = array_key_exists( 'templateflexiblecolumns', $data['sizes'] );
-    $gen = preg_match( '/500x\d{1,4}\.\w{2,4}$/', $data['sizes']['templateflexiblecolumns']['file'] );
+    $gen = preg_match( '/554x\d{1,4}\.\w{2,4}$/', $data['sizes']['templateflexiblecolumns']['file'] );
 
-    if( (!$key || !$gen) && $data['width'] > 500 ) {
+    if( (!$key || !$gen) && $data['width'] > 554 ) {
 
         // Regenerate thumbnail with custom image size
         $fullsizepath = get_attached_file( $value );
