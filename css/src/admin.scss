@@ -5,7 +5,9 @@
   }
 
   &[data-name="accordion_content"] #add_gform,
-  &[data-name="accordion_content"] #soliloquy-media-modal-button {
+  &[data-name="accordion_content"] #soliloquy-media-modal-button,
+  &.acf-field-wysiwyg .acf-editor-wrap[data-toolbar="simple_text"] .mce-menubar,
+  &.acf-field-wysiwyg .acf-editor-wrap[data-toolbar="simple_title"] .mce-menubar {
     display: none;
   }
 }
