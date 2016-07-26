@@ -37,7 +37,7 @@ module.exports = (grunt) ->
         'star-property-hack': false
         'duplicate-properties': false
         'unique-headings': false
-        # 'ids': false
+        'ids': false
         'display-property-grouping': false
         'floats': false
         'outline-none': false

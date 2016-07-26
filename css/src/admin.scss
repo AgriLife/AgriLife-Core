@@ -1,0 +1,11 @@
+.acf-field {
+  &[data-name="accordion_title"] .acf-editor-wrap iframe {
+    min-height: 100px;
+    max-height: 100px;
+  }
+
+  &[data-name="accordion_content"] #add_gform,
+  &[data-name="accordion_content"] #soliloquy-media-modal-button {
+    display: none;
+  }
+}

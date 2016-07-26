@@ -26,6 +26,9 @@ register_activation_hook( __FILE__, array( $activate, 'run') );
 $deactivate = new \AgriLife\Core\Deactivate;
 register_deactivation_hook( __FILE__, array( $deactivate, 'run' ) );
 
+// Register admin assets
+$agrilife_core_assets = new \AgriLife\Core\Assets();
+
 // Customize widgets
 $agrilife_core_widgets = new \AgriLife\Core\Widgets();
 
@@ -69,6 +72,7 @@ add_action( 'plugins_loaded', function() {
         do_action('agrilife_core_init');
     }
 }, 15);
+
 add_action( 'admin_init', function(){
     if ( !class_exists( 'acf' ) ) {
         deactivate_plugins( plugin_basename( __FILE__ ) );
@@ -82,6 +86,7 @@ if ( function_exists( 'add_image_size' ) ) {
     add_image_size( 'landing-template-thumbnail', 483, 272, true );
     add_image_size( 'templateflexiblecolumns', 554, 9999 );
 }
+
 add_filter('image_size_names_choose', 'agrilife_core_image_sizes');
 function agrilife_core_image_sizes($sizes) {
     $addsizes = array(
@@ -122,5 +127,21 @@ function ac_validate_image_sizes( $valid, $value, $field, $input ){
     }
 
     return $valid;
+
+}
+
+add_filter( 'acf/fields/wysiwyg/toolbars' , 'agriflex_toolbars'  );
+function agriflex_toolbars( $toolbars )
+{
+
+    // Add new toolbars
+
+    $toolbars['Simple Text'] = array();
+    $toolbars['Simple Text'][1] = array( 'bold' , 'italic', 'underline', 'link', 'unlink', 'alignleft', 'aligncenter', 'alignjustify', 'bullist', 'numlist' );
+
+    $toolbars['Simple Title'] = array();
+    $toolbars['Simple Title'][1] = array( 'bold' , 'italic', 'underline' );
+
+    return $toolbars;
 
 }

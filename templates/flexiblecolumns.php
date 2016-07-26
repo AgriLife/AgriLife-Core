@@ -8,7 +8,27 @@ if ( !get_field( 'show_page_title' ) ){
   remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
 }
 
+add_action( 'wp_enqueue_scripts', 'fc_register_js' );
+add_action( 'wp_footer', 'fc_enqueue_js' );
+
+function fc_register_js() {
+
+  wp_register_script( 'fc_template_script',
+    AG_CORE_DIR_URL . '/js/flexiblecolumns.js',
+    false,
+    true
+  );
+
+}
+
+function fc_enqueue_js() {
+
+  wp_enqueue_script( 'fc_template_script' );
+
+}
+
 add_action( 'genesis_entry_content', 'fc_repeating_content' );
+
 function fc_repeating_content()
 {
 
@@ -19,10 +39,14 @@ function fc_repeating_content()
 
     while( have_rows( 'rows' ) ): the_row();
 
-      ?><div class="row"><?php
-
       $rowname = get_row()['acf_fc_layout'];
       $content = '';
+
+      if( $rowname == 'columns'){
+        echo '<div class="row" style="text-align: ' . get_sub_field( 'text_alignment' ) . ';">';
+      } else {
+        echo '<div class="row">';
+      }
 
       if( $rowname == 'contact_info' ){
 
@@ -67,6 +91,11 @@ function fc_repeating_content()
           $content .= sprintf( '<div class="small-12 medium-%s large-%s columns">%s%s%s%s%s</div>', $cols, $cols, $linkopen, $heading, $img, $linkclose, $desc );
 
         }
+
+      } else if( $rowname == 'accordion' ){
+
+        $title = preg_replace( '/<(\/)?p>/', '<$1span>', get_sub_field( 'accordion_title' ) );
+        $content = sprintf( '<div class="small-12 medium-12 large-12 columns af-accordion"><a class="accordion-title" href="#" style="display: block;">%s</a><div class="accordion-content">%s</div></div>', $title, get_sub_field( 'accordion_content') );
 
       }
 
