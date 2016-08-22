@@ -54,7 +54,7 @@ function fc_repeating_content()
 
       } else if( $rowname == 'button' ){
 
-        $content = sprintf( '<div class="small-12 medium-12 large-12 columns" style="text-align:%s"><a class="button" href="%s">%s</a></div>', get_sub_field('alignment'), get_sub_field('link'), get_sub_field('text') );
+        $content = sprintf( '<div class="small-12 medium-12 large-12 columns" style="text-align:%s"><a class="button" href="%s" style="font-size:%srem;">%s</a></div>', get_sub_field('alignment'), get_sub_field('link'), get_sub_field('font_size'), get_sub_field('text') );
 
       } else if( $rowname == 'full_width' ){
 
