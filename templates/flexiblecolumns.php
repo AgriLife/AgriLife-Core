@@ -40,17 +40,19 @@ function fc_repeating_content()
     while( have_rows( 'rows' ) ): the_row();
 
       $rowname = get_row()['acf_fc_layout'];
-      $content = '';
+      $content = '<div class="row"';
 
-      if( $rowname == 'columns' || $rowname == 'buttons' ){
-        echo '<div class="row" style="text-align: ' . get_sub_field( 'text_alignment' ) . ';">';
-      } else {
-        echo '<div class="row">';
+      if( $rowname == 'columns' ){
+        $content .= sprintf( ' style="text-align: %s;"', get_sub_field('text_alignment') );
+      } else if( $rowname == 'buttons' ){
+        $content .= sprintf( ' style="text-align: %s; font-size: %srem;"', get_sub_field('text_alignment'), get_sub_field('font_size') );
       }
+
+      $content .= '>';
 
       if( $rowname == 'contact_info' ){
 
-        $content = sprintf( '<div class="small-12 medium-12 large-12 columns"><p class="vcard"><span class="fn">%s</span><br><a href="mailto:%s" class="email">%s</a><br><span class="tel">%s</span></p></div>', get_sub_field('name'), get_sub_field('email'), get_sub_field('email'), get_sub_field('phone') );
+        $content .= sprintf( '<div class="small-12 medium-12 large-12 columns"><p class="vcard"><span class="fn">%s</span><br><a href="mailto:%s" class="email">%s</a><br><span class="tel">%s</span></p></div>', get_sub_field('name'), get_sub_field('email'), get_sub_field('email'), get_sub_field('phone') );
 
       } else if( $rowname == 'buttons' ){
 
@@ -59,14 +61,14 @@ function fc_repeating_content()
         $cols = (12 - 12 % $count) / $count;
         
         foreach( $subfield as $button ){
-          $content .= sprintf( '<div class="small-12 medium-%s large-%s columns"><a class="button" href="%s" style="font-size:%srem;">%s</a></div>', $cols, $cols, $button['link'], $button['font_size'], $button['text'] );
+          $content .= sprintf( '<div class="small-12 medium-%s large-%s columns"><a class="button" href="%s">%s</a></div>', $cols, $cols, $button['link'], $button['text'] );
         }
 
         $content .= '<script type="text/javascript">' . file_get_contents(AG_CORE_DIR_PATH . 'js/flexiblecolumns_buttons.js') . '</script>';
 
       } else if( $rowname == 'full_width' ){
 
-        $content = sprintf( '<div class="small-12 medium-12 large-12 columns">%s</div>', get_sub_field('content') );
+        $content .= sprintf( '<div class="small-12 medium-12 large-12 columns">%s</div>', get_sub_field('content') );
 
       } else if( $rowname == 'columns' ){
 
@@ -105,13 +107,15 @@ function fc_repeating_content()
       } else if( $rowname == 'accordion' ){
 
         $title = preg_replace( '/<(\/)?p>/', '<$1span>', get_sub_field( 'accordion_title' ) );
-        $content = sprintf( '<div class="small-12 medium-12 large-12 columns af-accordion"><a class="accordion-title" href="#" style="display: block;">%s</a><div class="accordion-content">%s</div></div>', $title, get_sub_field( 'accordion_content') );
+        $content .= sprintf( '<div class="small-12 medium-12 large-12 columns af-accordion"><a class="accordion-title" href="#" style="display: block;">%s</a><div class="accordion-content">%s</div></div>', $title, get_sub_field( 'accordion_content') );
 
       }
 
+      $content .= '</div>';
+
       echo $content;
 
-      ?></div><?php
+      ?><?php
 
     endwhile; ?>
     </div><?php
