@@ -42,7 +42,7 @@ function fc_repeating_content()
       $rowname = get_row()['acf_fc_layout'];
       $content = '';
 
-      if( $rowname == 'columns'){
+      if( $rowname == 'columns' || $rowname == 'buttons' ){
         echo '<div class="row" style="text-align: ' . get_sub_field( 'text_alignment' ) . ';">';
       } else {
         echo '<div class="row">';
@@ -52,9 +52,17 @@ function fc_repeating_content()
 
         $content = sprintf( '<div class="small-12 medium-12 large-12 columns"><p class="vcard"><span class="fn">%s</span><br><a href="mailto:%s" class="email">%s</a><br><span class="tel">%s</span></p></div>', get_sub_field('name'), get_sub_field('email'), get_sub_field('email'), get_sub_field('phone') );
 
-      } else if( $rowname == 'button' ){
+      } else if( $rowname == 'buttons' ){
 
-        $content = sprintf( '<div class="small-12 medium-12 large-12 columns" style="text-align:%s"><a class="button" href="%s" style="font-size:%srem;">%s</a></div>', get_sub_field('alignment'), get_sub_field('link'), get_sub_field('font_size'), get_sub_field('text') );
+        $subfield = get_sub_field( 'content' );
+        $count = count( $subfield );
+        $cols = (12 - 12 % $count) / $count;
+        
+        foreach( $subfield as $button ){
+          $content .= sprintf( '<div class="small-12 medium-%s large-%s columns"><a class="button" href="%s" style="font-size:%srem;">%s</a></div>', $cols, $cols, $button['link'], $button['font_size'], $button['text'] );
+        }
+
+        $content .= '<script type="text/javascript">' . file_get_contents(AG_CORE_DIR_PATH . 'js/flexiblecolumns_buttons.js') . '</script>';
 
       } else if( $rowname == 'full_width' ){
 
