@@ -6,8 +6,7 @@
       maxHeight = 0;
 
   for(var i = 0; i < headings.length; i++){
-    var heading = headings[i];
-    var height = heading.getBoundingClientRect().height;
+    var height = headings[i].getBoundingClientRect().height;
     if(height > maxHeight){
       maxHeight = Math.ceil(height);
     }
