@@ -92,6 +92,8 @@ function fc_repeating_content()
 
         }
 
+        $content .= '<script type="text/javascript">' . file_get_contents(AG_CORE_DIR_PATH . 'js/flexiblecolumns_headings.js') . '</script>';
+
       } else if( $rowname == 'accordion' ){
 
         $title = preg_replace( '/<(\/)?p>/', '<$1span>', get_sub_field( 'accordion_title' ) );
