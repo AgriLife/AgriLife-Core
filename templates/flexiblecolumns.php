@@ -89,7 +89,7 @@ function fc_repeating_content()
           }
 
           if( $heading != '' ){
-            $heading = '<h3>' . $heading . '</h3>';
+            $heading = '<h3><span>' . $heading . '</span></h3>';
           }
 
           if( $img != '' ){
