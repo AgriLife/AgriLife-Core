@@ -40,7 +40,8 @@ function fc_repeating_content()
     while( have_rows( 'rows' ) ): the_row();
 
       $rowname = get_row()['acf_fc_layout'];
-      $content = '<div class="row"';
+      $rowclass = $rowname != 'buttons' ? 'row' : 'row collapse';
+      $content = sprintf('<div class="%s"', $rowclass);
 
       if( $rowname == 'columns' ){
         $content .= sprintf( ' style="text-align: %s;"', get_sub_field('text_alignment') );
@@ -61,7 +62,7 @@ function fc_repeating_content()
         $cols = (12 - 12 % $count) / $count;
         
         foreach( $subfield as $button ){
-          $content .= sprintf( '<div class="small-12 medium-%s large-%s columns"><a class="button" href="%s">%s</a></div>', $cols, $cols, $button['link'], $button['text'] );
+          $content .= sprintf( '<div class="small-12 medium-%s large-%s columns"><a class="button" style="%s" href="%s">%s</a></div>', $cols, $cols, 'max-width:100%;', $button['link'], $button['text'] );
         }
 
         $content .= '<script type="text/javascript">' . file_get_contents(AG_CORE_DIR_PATH . 'js/flexiblecolumns_buttons.js') . '</script>';
