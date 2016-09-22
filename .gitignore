@@ -45,6 +45,7 @@ css/*.css
 css/*.css.map
 js/public.min.js
 js/admin.min.js
+AgriLife-Core.zip
 
 # Ignore dependencies using package control
 js/lib/*
