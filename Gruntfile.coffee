@@ -71,19 +71,16 @@ module.exports = (grunt) ->
           {src: ['agrilife-core.php']},
           {src: ['README.md']},
         ]
-    gitinfo:
-      commands:
-        'lastUpdate': ['log', '-1', '--pretty=format:"%s"', '--no-merges']
     gh_release:
       options:
         token: process.env.RELEASE_KEY
         owner: 'agrilife'
         repo: 'AgriLife-Core'
       release:
-        tag_name: grunt.file.readJSON('package.json').version
+        tag_name: '<%= pkg.version %>'
         target_commitish: 'master'
         name: 'Release'
-        body: '<%= gitinfo.lastUpdate %>'
+        body: 'First release'
         draft: false
         prerelease: false
         asset:
@@ -104,7 +101,34 @@ module.exports = (grunt) ->
   @registerTask 'default', ['compass', 'concat']
   @registerTask 'develop', ['compass', 'jshint', 'csslint', 'concat']
   @registerTask 'package', ['default', 'csslint', 'jshint']
-  @registerTask 'release', ['gitinfo', 'compress', 'gh_release']
+  @registerTask 'release', ['compress', 'setreleasemsg', 'gh_release']
+  @registerTask 'setreleasemsg', 'Set release message as range of commits', ->
+    done = @async()
+    grunt.util.spawn {
+      cmd: 'git'
+      args: [ 'tag' ]
+    }, (err, result, code) ->
+      if(result.stdout!='')
+        matches = result.stdout.match(/([^\n]+)$/)
+        releaserange = matches[1] + '..HEAD'
+        grunt.config.set 'releaserange', releaserange
+        grunt.task.run('shortlog');
+      done(err)
+      return
+    return
+  @registerTask 'shortlog', 'Set gh_release body with commit messages since last release', ->
+    done = @async()
+    grunt.util.spawn {
+      cmd: 'git'
+      args: ['shortlog', grunt.config.get('releaserange'), '--no-merges']
+    }, (err, result, code) ->
+      if(result.stdout != '')
+        grunt.config 'gh_release.release.body', result.stdout.replace(/(\n)\s\s+/g, '$1- ')
+      else
+        grunt.config 'gh_release.release.body', 'release'
+      done(err)
+      return
+    return
 
   @event.on 'watch', (action, filepath) =>
     @log.writeln('#{filepath} has #{action}')
