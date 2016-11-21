@@ -3,7 +3,7 @@
  * Template Name: Flexible Columns
  */
 
-  
+
 if ( !get_field( 'show_page_title' ) ){
   remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
 }
@@ -60,7 +60,7 @@ function fc_repeating_content()
         $subfield = get_sub_field( 'content' );
         $count = count( $subfield );
         $cols = (12 - 12 % $count) / $count;
-        
+
         foreach( $subfield as $button ){
           $content .= sprintf( '<div class="small-12 medium-%s large-%s columns"><a class="button" style="%s" href="%s">%s</a></div>', $cols, $cols, 'max-width:100%;', $button['link'], $button['text'] );
         }
@@ -94,7 +94,8 @@ function fc_repeating_content()
           }
 
           if( $img != '' ){
-            $img = sprintf( '<img src="%s" alt="%s"/>', $img['sizes']['templateflexiblecolumns'], $img['alt'] );
+            $sizename = 'template-flexcolumns-' . $count;
+            $img = sprintf( '<img src="%s" alt="%s"/>', $img['sizes'][$sizename], $img['alt'] );
             if( $desc != '' )
               $linkclose .= '<br>';
           }

@@ -84,7 +84,9 @@ add_action( 'admin_init', function(){
 if ( function_exists( 'add_image_size' ) ) {
     add_image_size( 'landing-template-slider', 1024, 576, true );
     add_image_size( 'landing-template-thumbnail', 483, 272, true );
-    add_image_size( 'templateflexiblecolumns', 554, 9999 );
+    // Flexible Columns 5x3 ratio
+    add_image_size( 'template-flexcolumns-2', 554, 332, true );
+    add_image_size( 'template-flexcolumns-3', 370, 222, true );
 }
 
 add_filter('image_size_names_choose', 'agrilife_core_image_sizes');
@@ -92,7 +94,8 @@ function agrilife_core_image_sizes($sizes) {
     $addsizes = array(
         "landing-template-slider" => __( "Landing Template Slider"),
         "landing-template-thumbnail" => __( "Landing Template Thumbnail"),
-        "templateflexiblecolumns" => __( "Flexible Columns Template Column Image")
+        "template-flexcolumns-2" => __( "Flexible Columns Template: 2 Columns"),
+        "template-flexcolumns-3" => __( "Flexible Columns Template: 3 Columns")
     );
     $newsizes = array_merge($sizes, $addsizes);
     return $newsizes;
@@ -103,21 +106,34 @@ $agrilife_template_flexiblecolumns = new \AgriLife\Core\PageTemplate();
 $agrilife_template_flexiblecolumns->with_path( AG_CORE_TEMPLATE_PATH )->with_file( 'flexiblecolumns' )->with_name( 'Flexible Columns' );
 $agrilife_template_flexiblecolumns->register();
 
-// Validate images used in columns for custom size
+// Validate size of column images
 add_action( 'acf/validate_value/name=columnimage', 'ac_validate_image_sizes', 10, 4 );
 function ac_validate_image_sizes( $valid, $value, $field, $input ){
 
-    // bail early if value is already invalid
-    if( !$valid ) {
-        return $valid;
-    }
-
+    $regen = false;
     $data = wp_get_attachment_metadata( $value, true );
 
-    $key = array_key_exists( 'templateflexiblecolumns', $data['sizes'] );
-    $gen = preg_match( '/554x\d{1,4}\.\w{2,4}$/', $data['sizes']['templateflexiblecolumns']['file'] );
+    // Check for 2 column size
+    $key = array_key_exists( 'template-flexcolumns-2', $data['sizes'] );
+    $gen = preg_match( '/554x\d{1,4}\.\w{2,4}$/', $data['sizes']['template-flexcolumns-2']['file'] );
 
-    if( (!$key || !$gen) && $data['width'] > 554 ) {
+    if( (!$key || !$gen) && $data['width'] >= 554 && $data['height'] >= 332 ) {
+
+        $regen = true;
+
+    }
+
+    // Check for 3 column size
+    $key = array_key_exists( 'template-flexcolumns-3', $data['sizes'] );
+    $gen = preg_match( '/370x\d{1,4}\.\w{2,4}$/', $data['sizes']['template-flexcolumns-3']['file'] );
+
+    if( (!$key || !$gen) && $data['width'] >= 370 && $data['height'] >= 222 ) {
+
+        $regen = true;
+
+    }
+
+    if($regen){
 
         // Regenerate thumbnail with custom image size
         $fullsizepath = get_attached_file( $value );

@@ -100,6 +100,7 @@ acf_add_local_field_group(array (
                             'placeholder' => '',
                             'disabled' => 0,
                             'readonly' => 0,
+                            'return_format' => 'value',
                         ),
                         array (
                             'key' => 'field_5772d80e25f51',
@@ -157,8 +158,8 @@ acf_add_local_field_group(array (
                                     'return_format' => 'array',
                                     'preview_size' => 'thumbnail',
                                     'library' => 'all',
-                                    'min_width' => '',
-                                    'min_height' => '',
+                                    'min_width' => 554,
+                                    'min_height' => 332,
                                     'min_size' => '',
                                     'max_width' => '',
                                     'max_height' => '',
@@ -314,6 +315,7 @@ acf_add_local_field_group(array (
                             'placeholder' => '',
                             'disabled' => 0,
                             'readonly' => 0,
+                            'return_format' => 'value',
                         ),
                         array (
                             'key' => 'field_57d30797a57d0',
