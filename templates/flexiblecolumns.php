@@ -73,13 +73,50 @@ function fc_repeating_content()
 
       } else if( $rowname == 'columns' ){
 
-        $subfield = get_sub_field( 'content' );
-        $count = count( $subfield );
+        // Set layout variables
+        $count = (int)get_sub_field( 'count' );
         $cols = (12 - 12 % $count) / $count;
 
-        foreach( $subfield as $cell ){
+        // Get cell content
+        if( !empty(get_sub_field( 'count' )) ){
+
+          // Cell content types are in the same repeater field
+          $headings = get_sub_field( 'headings' )[0];
+          $descriptions = get_sub_field( 'descriptions' )[0];
+          $links = get_sub_field( 'links' )[0];
+          $images = get_sub_field( 'images' )[0];
+
+          // Remove unused fields
+          if($count == 2){
+            array_pop($images);
+            array_pop($images);
+            array_pop($images);
+          } else {
+            array_shift($images);
+            array_shift($images);
+          }
+
+          // Arrange values by cell
+          $row = array();
+          for( $i = 0; $i < $count; $i++ ){
+            $row[] = array(
+              'heading' => array_shift($headings),
+              'image' => array_shift($images),
+              'description' => array_shift($descriptions),
+              'link' => array_shift($links)
+            );
+          }
+        } else {
+
+          // Old method: cell content is in a single repeater field
+          $row = get_sub_field( 'content' );
+
+        }
+
+        foreach( $row as $cell ){
+
           $heading = $cell['heading'];
-          $img = $cell['columnimage'];
+          $img = $cell['image'];
           $desc = $cell['description'];
           $link = $cell['link'];
           $linkopen = $linkclose = '';

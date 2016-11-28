@@ -10,4 +10,71 @@
   &.acf-field-wysiwyg .acf-editor-wrap[data-toolbar="simple_title"] .mce-menubar {
     display: none;
   }
+
+  .layout[data-layout="columns"] {
+    .acf-field-repeater thead {
+      display: none;
+    }
+
+    > .acf-fields > .acf-field-repeater {
+
+      > .acf-label {
+        padding-top: 12px;
+      }
+
+      &.acf-field-5772d80e25f51 > .acf-label {
+        padding-top: 28px;
+      }
+
+      td.acf-field[data-name="image1of2"] {
+        width: 49.9%;
+      }
+
+      td.acf-field[data-name="image2of2"] {
+        width: 50.1%;
+      }
+
+      td.acf-field[data-name="image1of3"],
+      td.acf-field[data-name="image2of3"],
+      td.acf-field[data-name="image3of3"] {
+        width: 33.3%;
+      }
+    }
+
+    // Remove bottom spacing from headings, images, and descriptions
+    .acf-fields > .acf-field.acf-field-5772d80e25f51,
+    .acf-fields > .acf-field.acf-field-58349ad66ded1,
+    .acf-fields > .acf-field.acf-field-58349be6486ee {
+
+      .acf-label,
+      .acf-input {
+        padding-bottom: 0;
+      }
+
+      .acf-repeater > table {
+        margin-bottom: 0;
+      }
+    }
+
+    // Remove top spacing from images, descriptions, and links
+    .acf-fields > .acf-field.acf-field-58349ad66ded1,
+    .acf-fields > .acf-field.acf-field-58349be6486ee,
+    .acf-fields > .acf-field.acf-field-58349cf9486f1 {
+      border-top-width: 0;
+
+      .acf-table {
+        border-top: 0;
+      }
+
+      // > .acf-label,
+      > .acf-input {
+        padding-top: 0;
+      }
+    }
+
+    // Remove the left border from the first visible image field in the conditional group
+    .acf-fields > .acf-field.acf-field-58349ad66ded1 .acf-table > tbody > tr > td:first-child + td + td {
+      border-left-width: 0;
+    }
+  }
 }

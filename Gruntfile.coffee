@@ -48,6 +48,7 @@ module.exports = (grunt) ->
         'font-sizes': false
         'overqualified-elements': false
         'important': false
+        'regex-selectors': false
         force: true
       src: ['css/*.css']
     concat:
