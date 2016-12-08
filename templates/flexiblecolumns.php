@@ -69,16 +69,19 @@ function fc_repeating_content()
 
       } else if( $rowname == 'full_width' ){
 
-        $content .= sprintf( '<div class="small-12 medium-12 large-12 columns">%s</div>', get_sub_field('content') );
+        $content .= sprintf( '<div class="small-12 medium-12 large-12 columns">%s</div>',
+          get_sub_field('content')
+        );
 
       } else if( $rowname == 'columns' ){
 
-        // Set layout variables
-        $count = (int)get_sub_field( 'count' );
-        $cols = (12 - 12 % $count) / $count;
-
         // Get cell content
-        if( !empty(get_sub_field( 'count' )) ){
+        if( !empty(get_sub_field( 'count' )) && is_array(get_sub_field( 'headings' )) ){
+
+          // Page is using the new template
+
+          // Get number of columns
+          $count = (int)get_sub_field( 'count' );
 
           // Cell content types are in the same repeater field
           $headings = get_sub_field( 'headings' )[0];
@@ -87,13 +90,15 @@ function fc_repeating_content()
           $images = get_sub_field( 'images' )[0];
 
           // Remove unused fields
-          if($count == 2){
-            array_pop($images);
-            array_pop($images);
-            array_pop($images);
-          } else {
-            array_shift($images);
-            array_shift($images);
+          if($images){
+            if($count == 2){
+              array_pop($images);
+              array_pop($images);
+              array_pop($images);
+            } else {
+              array_shift($images);
+              array_shift($images);
+            }
           }
 
           // Arrange values by cell
@@ -101,22 +106,35 @@ function fc_repeating_content()
           for( $i = 0; $i < $count; $i++ ){
             $row[] = array(
               'heading' => array_shift($headings),
-              'image' => array_shift($images),
+              'columnimage' => array_shift($images),
               'description' => array_shift($descriptions),
               'link' => array_shift($links)
             );
           }
-        } else {
 
-          // Old method: cell content is in a single repeater field
+        } else if(is_array(get_sub_field( 'content' ))){
+
+          // Page is using the old template
+
+          // Get number of columns
+          $count = count( get_sub_field( 'content' ) );
+
+          // Cell content is in a single repeater field
           $row = get_sub_field( 'content' );
 
+        } else {
+
+          $count = 0;
+          $row = array();
+
         }
+
+        $cols = (12 - 12 % $count) / $count;
 
         foreach( $row as $cell ){
 
           $heading = $cell['heading'];
-          $img = $cell['image'];
+          $img = $cell['columnimage'];
           $desc = $cell['description'];
           $link = $cell['link'];
           $linkopen = $linkclose = '';
