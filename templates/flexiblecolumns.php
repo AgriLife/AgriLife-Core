@@ -76,6 +76,7 @@ function fc_repeating_content()
       } else if( $rowname == 'columns' ){
 
         // Get cell content
+        $count = 0;
         if( !empty(get_sub_field( 'count' )) && is_array(get_sub_field( 'headings' )) ){
 
           // Page is using the new template
@@ -122,44 +123,46 @@ function fc_repeating_content()
           // Cell content is in a single repeater field
           $row = get_sub_field( 'content' );
 
-        } else {
-
-          $count = 0;
-          $row = array();
-
         }
 
-        $cols = (12 - 12 % $count) / $count;
+        if($count > 0){
 
-        foreach( $row as $cell ){
+          // Determine the number of Foundation columns per cell
+          $cols = (12 - 12 % $count) / $count;
 
-          $heading = $cell['heading'];
-          $img = $cell['columnimage'];
-          $desc = $cell['description'];
-          $link = $cell['link'];
-          $linkopen = $linkclose = '';
+          // Add each cell's content to output
+          foreach( $row as $cell ){
 
-          if( $link != '' ){
-            $linkopen = '<a href="' . $link . '" style="display:block">';
-            $linkclose = '</a>';
+            $heading = $cell['heading'];
+            $img = $cell['columnimage'];
+            $desc = $cell['description'];
+            $link = $cell['link'];
+            $linkopen = $linkclose = '';
+
+            if( $link != '' ){
+              $linkopen = '<a href="' . $link . '" style="display:block">';
+              $linkclose = '</a>';
+            }
+
+            if( $heading != '' ){
+              $heading = '<h3><span>' . $heading . '</span></h3>';
+            }
+
+            if( $img != '' ){
+              $sizename = 'template-flexcolumns-' . $count;
+              $img = sprintf( '<img src="%s" alt="%s"/>', $img['sizes'][$sizename], $img['alt'] );
+              if( $desc != '' )
+                $linkclose .= '<br>';
+            }
+
+            $content .= sprintf( '<div class="small-12 medium-%s large-%s columns">%s%s%s%s%s</div>', $cols, $cols, $linkopen, $heading, $img, $linkclose, $desc );
+
           }
 
-          if( $heading != '' ){
-            $heading = '<h3><span>' . $heading . '</span></h3>';
-          }
-
-          if( $img != '' ){
-            $sizename = 'template-flexcolumns-' . $count;
-            $img = sprintf( '<img src="%s" alt="%s"/>', $img['sizes'][$sizename], $img['alt'] );
-            if( $desc != '' )
-              $linkclose .= '<br>';
-          }
-
-          $content .= sprintf( '<div class="small-12 medium-%s large-%s columns">%s%s%s%s%s</div>', $cols, $cols, $linkopen, $heading, $img, $linkclose, $desc );
+          // Add script that sets equal height for column titls
+          $content .= '<script type="text/javascript">' . file_get_contents(AG_CORE_DIR_PATH . 'js/flexiblecolumns_headings.js') . '</script>';
 
         }
-
-        $content .= '<script type="text/javascript">' . file_get_contents(AG_CORE_DIR_PATH . 'js/flexiblecolumns_headings.js') . '</script>';
 
       } else if( $rowname == 'accordion' ){
 
