@@ -77,7 +77,7 @@ function fc_repeating_content()
 
         // Get cell content
         $count = 0;
-        if( get_sub_field('use_old_cell_fields') !== true ){
+        if( !empty(get_sub_field( 'count' )) && is_array(get_sub_field( 'headings' ))){
 
           // Use new fields for cell content
 
