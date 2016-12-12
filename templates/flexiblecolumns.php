@@ -77,9 +77,9 @@ function fc_repeating_content()
 
         // Get cell content
         $count = 0;
-        if( !empty(get_sub_field( 'count' )) && is_array(get_sub_field( 'headings' )) ){
+        if( get_sub_field('use_old_cell_fields') !== true ){
 
-          // Page is using the new template
+          // Use new fields for cell content
 
           // Get number of columns
           $count = (int)get_sub_field( 'count' );
@@ -115,7 +115,7 @@ function fc_repeating_content()
 
         } else if(is_array(get_sub_field( 'content' ))){
 
-          // Page is using the old template
+          // Use old fields for cell content
 
           // Get number of columns
           $count = count( get_sub_field( 'content' ) );

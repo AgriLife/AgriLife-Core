@@ -1,6 +1,6 @@
 {
   "name": "agrilife-core",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Core functionality plugin for all Texas A&M AgriLife sites",
   "main": "agrilife-core.php",
   "scripts": {
