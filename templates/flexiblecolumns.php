@@ -75,94 +75,72 @@ function fc_repeating_content()
 
       } else if( $rowname == 'columns' ){
 
-        // Get cell content
-        $count = 0;
-        if( !empty(get_sub_field( 'count' )) && is_array(get_sub_field( 'headings' ))){
+        // Get number of columns
+        $count = (int)get_sub_field( 'count' );
 
-          // Use new fields for cell content
+        // Cell content types are in the same repeater field
+        $headings = get_sub_field( 'headings' )[0];
+        $descriptions = get_sub_field( 'descriptions' )[0];
+        $links = get_sub_field( 'links' )[0];
+        $images = get_sub_field( 'images' )[0];
 
-          // Get number of columns
-          $count = (int)get_sub_field( 'count' );
+        // Remove unused fields
+        if($images){
+          if($count == 2){
+            array_pop($images);
+            array_pop($images);
+            array_pop($images);
+          } else {
+            array_shift($images);
+            array_shift($images);
+          }
+        }
 
-          // Cell content types are in the same repeater field
-          $headings = get_sub_field( 'headings' )[0];
-          $descriptions = get_sub_field( 'descriptions' )[0];
-          $links = get_sub_field( 'links' )[0];
-          $images = get_sub_field( 'images' )[0];
+        // Arrange values by cell
+        $row = array();
+        for( $i = 0; $i < $count; $i++ ){
+          $row[] = array(
+            'heading' => array_shift($headings),
+            'columnimage' => array_shift($images),
+            'description' => array_shift($descriptions),
+            'link' => array_shift($links)
+          );
+        }
 
-          // Remove unused fields
-          if($images){
-            if($count == 2){
-              array_pop($images);
-              array_pop($images);
-              array_pop($images);
-            } else {
-              array_shift($images);
-              array_shift($images);
-            }
+        // Determine the number of Foundation columns per cell
+        $cols = (12 - 12 % $count) / $count;
+
+        // Add each cell's content to output
+        foreach( $row as $cell ){
+
+          $heading = $cell['heading'];
+          $img = $cell['columnimage'];
+          $desc = $cell['description'];
+          $link = $cell['link'];
+          $linkopen = $linkclose = '';
+
+          if( $link != '' ){
+            $linkopen = '<a href="' . $link . '" style="display:block">';
+            $linkclose = '</a>';
           }
 
-          // Arrange values by cell
-          $row = array();
-          for( $i = 0; $i < $count; $i++ ){
-            $row[] = array(
-              'heading' => array_shift($headings),
-              'columnimage' => array_shift($images),
-              'description' => array_shift($descriptions),
-              'link' => array_shift($links)
-            );
+          if( $heading != '' ){
+            $heading = '<h3><span>' . $heading . '</span></h3>';
           }
 
-        } else if(is_array(get_sub_field( 'content' ))){
+          if( $img != '' ){
+            $sizename = 'template-flexcolumns-' . $count;
+            $img = sprintf( '<img src="%s" alt="%s"/>', $img['sizes'][$sizename], $img['alt'] );
+            if( $desc != '' )
+              $linkclose .= '<br>';
+          }
 
-          // Use old fields for cell content
-
-          // Get number of columns
-          $count = count( get_sub_field( 'content' ) );
-
-          // Cell content is in a single repeater field
-          $row = get_sub_field( 'content' );
+          $content .= sprintf( '<div class="small-12 medium-%s large-%s columns">%s%s%s%s%s</div>', $cols, $cols, $linkopen, $heading, $img, $linkclose, $desc );
 
         }
 
-        if($count > 0){
-
-          // Determine the number of Foundation columns per cell
-          $cols = (12 - 12 % $count) / $count;
-
-          // Add each cell's content to output
-          foreach( $row as $cell ){
-
-            $heading = $cell['heading'];
-            $img = $cell['columnimage'];
-            $desc = $cell['description'];
-            $link = $cell['link'];
-            $linkopen = $linkclose = '';
-
-            if( $link != '' ){
-              $linkopen = '<a href="' . $link . '" style="display:block">';
-              $linkclose = '</a>';
-            }
-
-            if( $heading != '' ){
-              $heading = '<h3><span>' . $heading . '</span></h3>';
-            }
-
-            if( $img != '' ){
-              $sizename = 'template-flexcolumns-' . $count;
-              $img = sprintf( '<img src="%s" alt="%s"/>', $img['sizes'][$sizename], $img['alt'] );
-              if( $desc != '' )
-                $linkclose .= '<br>';
-            }
-
-            $content .= sprintf( '<div class="small-12 medium-%s large-%s columns">%s%s%s%s%s</div>', $cols, $cols, $linkopen, $heading, $img, $linkclose, $desc );
-
-          }
-
-          // Add script that sets equal height for column titls
-          $content .= '<script type="text/javascript">' . file_get_contents(AG_CORE_DIR_PATH . 'js/flexiblecolumns_headings.js') . '</script>';
-
-        }
+        // Add script that sets equal height for column titls
+        $content .= '<script type="text/javascript">' . file_get_contents(AG_CORE_DIR_PATH . 'js/flexiblecolumns_headings.js') . '</script>';
 
       } else if( $rowname == 'accordion' ){
 
