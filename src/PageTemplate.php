@@ -84,8 +84,13 @@ class PageTemplate {
 
 	public function register() {
 
+		if ( version_compare( floatval($GLOBALS['wp_version']), '4.7', '<' ) ) {
+			$filters['dropdown']       = add_filter( 'page_attributes_dropdown_pages_args', array( $this, 'add_to_cache' ) );
+		} else {
+			$filter['dropdown']        = add_filter( 'theme_page_templates', array( $this, 'add_to_cache_templates' ) );
+		}
+
 		$filters['admin_init']       = add_filter( 'admin_init', array( $this, 'add_to_cache' ) );
-		$filters['dropdown']         = add_filter( 'page_attributes_dropdown_pages_args', array( $this, 'add_to_cache' ) );
 		$filters['post_data']        = add_filter( 'wp_insert_post_data', array( $this, 'add_to_cache' ) );
 		$filters['template_include'] = add_filter( 'template_include', array( $this, 'view_project_template' ) );
 
@@ -93,11 +98,33 @@ class PageTemplate {
 
 	}
 
+	public function add_to_cache_templates( $templates ) {
+
+		$cache_key = 'page_templates-' . md5( get_theme_root() . '/' . get_stylesheet() );
+
+		if ( empty( $templates ) ) {
+			$templates = array();
+		}
+
+		wp_cache_delete( $cache_key, 'themes' );
+
+		$new_template = array( $this->file => $this->name );
+
+		$templates = array_merge( $templates, $new_template );
+
+		wp_cache_add( $cache_key, $templates, 'themes', 1800 );
+
+		return $templates;
+
+	}
+
 	public function add_to_cache( $atts ) {
 
 		$cache_key = 'page_templates-' . md5( get_theme_root() . '/' . get_stylesheet() );
 
+		// Extract templates if using WordPress <4.7
 		$templates = wp_get_theme()->get_page_templates();
+
 		if ( empty( $templates ) ) {
 			$templates = array();
 		}
