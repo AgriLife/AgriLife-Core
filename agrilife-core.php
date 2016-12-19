@@ -61,6 +61,10 @@ $agrilife_template_landing = new \AgriLife\Core\PageTemplate();
 $agrilife_template_landing->with_path( AG_CORE_TEMPLATE_PATH )->with_file( 'landing' )->with_name( 'Landing Page 2' );
 $agrilife_template_landing->register();
 
+$agrilife_template_flexiblecolumns = new \AgriLife\Core\PageTemplate();
+$agrilife_template_flexiblecolumns->with_path( AG_CORE_TEMPLATE_PATH )->with_file( 'flexiblecolumns' )->with_name( 'Flexible Columns' );
+$agrilife_template_flexiblecolumns->register();
+
 // All child plugins should hook into 'agrilife_core_init' where necessary
 
 add_action( 'plugins_loaded', function() {
@@ -76,7 +80,7 @@ add_action( 'plugins_loaded', function() {
 add_action( 'admin_init', function(){
     if ( !class_exists( 'acf' ) ) {
         deactivate_plugins( plugin_basename( __FILE__ ) );
-        wp_die( 'The AgriLife Core plugin requires Advanced Custom Fields 5. <br><a href="' . str_replace('?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']) . '">Return to Plugins page.</a>' );
+        wp_die( 'The AgriLife Core plugin requires Advanced Custom Fields 5, which is not active on this site. Deactivating plugin. <br><a href="' . str_replace('?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']) . '">Return to Plugins page.</a>' );
     }
 });
 
@@ -100,11 +104,6 @@ function agrilife_core_image_sizes($sizes) {
     $newsizes = array_merge($sizes, $addsizes);
     return $newsizes;
 }
-
-// Flexible Columns Template
-$agrilife_template_flexiblecolumns = new \AgriLife\Core\PageTemplate();
-$agrilife_template_flexiblecolumns->with_path( AG_CORE_TEMPLATE_PATH )->with_file( 'flexiblecolumns' )->with_name( 'Flexible Columns' );
-$agrilife_template_flexiblecolumns->register();
 
 // Validate size of column images
 add_action( 'acf/validate_value/name=columnimage', 'ac_validate_image_sizes', 10, 4 );
