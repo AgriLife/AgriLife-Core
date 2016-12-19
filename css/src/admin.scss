@@ -8,7 +8,7 @@ $descriptions: "58349be6486ee";
 
     .layout[data-layout="columns"] {
 
-      > .acf-fields > .acf-field-repeater {
+      .acf-field-repeater {
 
         > .acf-label {
           padding-top: 12px;
@@ -34,9 +34,9 @@ $descriptions: "58349be6486ee";
       }
 
       // Remove bottom spacing
-      .acf-fields > .acf-field.acf-field-#{$headings},
-      .acf-fields > .acf-field.acf-field-#{$images},
-      .acf-fields > .acf-field.acf-field-#{$links} {
+      .acf-field.acf-field-#{$headings},
+      .acf-field.acf-field-#{$images},
+      .acf-field.acf-field-#{$links} {
 
         td.acf-field {
           padding-bottom: 0;
@@ -57,12 +57,14 @@ $descriptions: "58349be6486ee";
       }
 
       // Remove top spacing
-      .acf-fields > .acf-field.acf-field-#{$images},
-      .acf-fields > .acf-field.acf-field-#{$links},
-      .acf-fields > .acf-field.acf-field-#{$descriptions} {
+      .acf-field.acf-field-#{$images},
+      .acf-field.acf-field-#{$links},
+      .acf-field.acf-field-#{$descriptions} {
         border-top-width: 0;
 
-        .acf-table {
+        .acf-table,
+        .acf-label,
+        .acf-input {
           border-top: 0;
         }
 
@@ -72,9 +74,28 @@ $descriptions: "58349be6486ee";
         }
       }
 
-      // Remove the left border from the first visible image field in the conditional group
-      .acf-fields > .acf-field.acf-field-#{$images} .acf-table > tbody > tr > td:first-child + td + td {
-        border-left-width: 0;
+      // Image field changes
+      .acf-fields > .acf-field.acf-field-#{$images} .acf-table > tbody > tr > td {
+        border-width: 0 0 0 0;
+
+        // Two column layout
+        &[data-name="image1of2"]{
+          border-right-width: 1px;
+        }
+
+        &[data-name$="of2"]{
+          width: 50%;
+        }
+
+        // Three column layout
+        &[data-name$="of3"]{
+          border-width: 0 1px 0 0;
+          width: 33.33%;
+        }
+
+        &[data-name="image3of3"] {
+          border-width: 0;
+        }
       }
     }
   }
@@ -94,13 +115,17 @@ $descriptions: "58349be6486ee";
     display: none;
   }
 
+  .acf-label {
+    box-sizing: border-box;
+  }
+
   .layout[data-layout="columns"] {
     .acf-field-repeater thead {
       display: none;
     }
     // Extend image borders to match height of notes
-    .acf-fields > .acf-field.acf-field-#{$images} {
-      > .acf-label, .acf-table {
+    .acf-field.acf-field-#{$images} {
+      .acf-label, .acf-table {
         $line-height: 16.8px;
 
         @media screen and (min-width: 782px){
