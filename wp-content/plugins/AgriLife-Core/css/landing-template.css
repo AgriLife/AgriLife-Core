@@ -1,0 +1,80 @@
+/* line 1, src/landing-template.scss */
+.entry-header,
+.entry-content .soliloquy-container {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* line 6, src/landing-template.scss */
+.entry-header {
+  max-width: 1024px;
+}
+
+/* line 9, src/landing-template.scss */
+.entry-content .soliloquy-container,
+.higher-content,
+.repeating-content,
+.lower-content {
+  margin-top: 2rem !important;
+  max-width: 1024px;
+}
+
+/* line 19, src/landing-template.scss */
+.higher-content p,
+.repeating-content p,
+.lower-content p {
+  margin-bottom: 0;
+}
+/* line 21, src/landing-template.scss */
+.higher-content p ~ p,
+.repeating-content p ~ p,
+.lower-content p ~ p {
+  margin-top: 1rem;
+}
+
+/* line 27, src/landing-template.scss */
+.repeating-content .row {
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+}
+/* line 33, src/landing-template.scss */
+.repeating-content .columns:first-child {
+  padding-left: 0;
+  padding-right: 29px;
+}
+/* line 37, src/landing-template.scss */
+.repeating-content .columns + .columns {
+  padding-left: 29px;
+  padding-right: 0;
+}
+@media screen and (max-width: 45em) {
+  /* line 42, src/landing-template.scss */
+  .repeating-content .row {
+    text-align: center;
+  }
+  /* line 45, src/landing-template.scss */
+  .repeating-content .row .columns {
+    text-align: left;
+    display: inline-block;
+    float: none;
+    max-width: 483px;
+    padding: 0;
+  }
+  /* line 52, src/landing-template.scss */
+  .repeating-content .row .columns + .columns {
+    margin-top: 1rem;
+  }
+}
+/* line 58, src/landing-template.scss */
+.repeating-content .image + .description,
+.repeating-content .row:first-child ~ .row {
+  margin-top: 1rem;
+}
+/* line 62, src/landing-template.scss */
+.repeating-content .image img {
+  width: 485px;
+}
+
+/*# sourceMappingURL=landing-template.css.map */
