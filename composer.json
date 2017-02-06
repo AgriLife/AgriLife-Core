@@ -26,8 +26,7 @@
 	"require-dev"      : {
 		"monolog/monolog"     : "1.1.*",
 		"phpunit/phpunit"     : "3.7.*",
-		"mikey179/vfsStream"  : "1.2.*",
-		"wordpress/unit-tests": "1.0"
+		"mikey179/vfsStream"  : "1.2.*"
 	},
 	"autoload"         : {
 		"psr-4": {
