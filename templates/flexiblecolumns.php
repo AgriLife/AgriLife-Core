@@ -100,10 +100,10 @@ function fc_repeating_content()
         $row = array();
         for( $i = 0; $i < $count; $i++ ){
           $row[] = array(
-            'heading' => array_shift($headings),
-            'columnimage' => array_shift($images),
-            'description' => array_shift($descriptions),
-            'link' => array_shift($links)
+            'heading' => gettype($headings) == 'array' ? array_shift($headings) : '',
+            'columnimage' => gettype($images) == 'array' ? array_shift($images) : '',
+            'description' => gettype($descriptions) == 'array' ? array_shift($descriptions) : '',
+            'link' => gettype($links) == 'array' ? array_shift($links) : ''
           );
         }
 
