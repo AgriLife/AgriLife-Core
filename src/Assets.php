@@ -5,7 +5,7 @@ namespace AgriLife\Core;
 class Assets {
 
   public function __construct() {
-    
+
     // Register admin scripts used in the theme
     add_action( 'admin_enqueue_scripts', array( $this, 'register_admin_styles' ) );
 
@@ -23,7 +23,7 @@ class Assets {
 
     wp_register_style(
       'admin-styles',
-      AG_CORE_DIR_URL . '/css/admin.css',
+      AG_CORE_DIR_URL . 'css/admin.css',
       array(),
       '',
       'screen'

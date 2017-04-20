@@ -131,6 +131,8 @@ function fc_repeating_content()
           if( $img != '' ){
             $sizename = 'template-flexcolumns-' . $count;
             $img = sprintf( '<img src="%s" alt="%s"/>', $img['sizes'][$sizename], $img['alt'] );
+            if( $link != '' )
+              $linkopen = str_replace('<a ', '<a class="flexible-columns-image-link" ', $linkopen);
             if( $desc != '' )
               $linkclose .= '<br>';
           }
