@@ -12,11 +12,14 @@ body.fc-lightbox-opened {
 		margin-bottom: 1.5em;
 	}
 
-	.flexiblecolumns.row .summary a {
-		text-decoration: none;
+	.flexiblecolumns.row {
 
-		&:hover, &:focus {
-			text-decoration: underline;
+		.summary a {
+			text-decoration: none;
+
+			&:hover, &:focus {
+				text-decoration: underline;
+			}
 		}
 	}
 
@@ -112,11 +115,9 @@ body.fc-lightbox-opened {
 						font-size: 21px;
 						line-height: 36px;
 						font-weight: bold;
-						color: #000;
+						color: #757575;
 						text-align: center;
-						text-shadow: 0 1px 0 #fff;
 						text-decoration: none;
-						opacity: 0.2;
 					}
 				}
 			}
