@@ -12,6 +12,14 @@ body.fc-lightbox-opened {
 		margin-bottom: 1.5em;
 	}
 
+	.flexiblecolumns.row .summary a {
+		text-decoration: none;
+
+		&:hover, &:focus {
+			text-decoration: underline;
+		}
+	}
+
 	.publications {
 
 		ul {
@@ -34,7 +42,7 @@ body.fc-lightbox-opened {
 				padding: 10px 15px;
 				color: #003C71;
 
-				&:hover {
+				&:hover, &:focus {
 					color: #0068C1;
 					background-color: #EEE;
 				}
