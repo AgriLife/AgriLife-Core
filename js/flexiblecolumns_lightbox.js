@@ -42,4 +42,3 @@
 		return arr.join(' ');
 	}
 })();
-window.setTimeout( function(){window.scrollTo(0, 3700);}, 500);
