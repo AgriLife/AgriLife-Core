@@ -49,6 +49,8 @@ module.exports = (grunt) ->
         'overqualified-elements': false
         'important': false
         'regex-selectors': false
+        'qualified-headings': false
+        'fallback-colors': false
         force: true
       src: ['css/*.css']
     concat:
