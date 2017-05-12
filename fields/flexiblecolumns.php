@@ -85,32 +85,6 @@ acf_add_local_field_group(array (
                             'multiple' => 0,
                             'allow_null' => 0,
                             'choices' => array (
-                                'summary' => 'Summaries',
-                                'full' => 'Full Content',
-                            ),
-                            'default_value' => array (
-                            ),
-                            'ui' => 0,
-                            'ajax' => 0,
-                            'placeholder' => '',
-                            'return_format' => 'value',
-                            'key' => 'field_59107c430b640',
-                            'label' => 'Type',
-                            'name' => 'type',
-                            'type' => 'select',
-                            'instructions' => '',
-                            'required' => 0,
-                            'conditional_logic' => 0,
-                            'wrapper' => array (
-                                'width' => '',
-                                'class' => '',
-                                'id' => '',
-                            ),
-                        ),
-                        array (
-                            'multiple' => 0,
-                            'allow_null' => 0,
-                            'choices' => array (
                                 2 => '2',
                                 3 => '3',
                             ),
@@ -127,53 +101,7 @@ acf_add_local_field_group(array (
                             'type' => 'select',
                             'instructions' => '',
                             'required' => 0,
-                            'conditional_logic' => array (
-                                array (
-                                    array (
-                                        'field' => 'field_59107c430b640',
-                                        'operator' => '==',
-                                        'value' => 'summary',
-                                    ),
-                                ),
-                            ),
-                            'wrapper' => array (
-                                'width' => '',
-                                'class' => '',
-                                'id' => '',
-                            ),
-                        ),
-                        array (
-                            'multiple' => 0,
-                            'allow_null' => 0,
-                            'choices' => array (
-                                3 => '25 / 75',
-                                5 => '40 / 60',
-                                6 => '50 / 50',
-                                7 => '60 / 40',
-                                9 => '75 / 25',
-                            ),
-                            'default_value' => array (
-                                0 => 6,
-                            ),
-                            'ui' => 0,
-                            'ajax' => 0,
-                            'placeholder' => '',
-                            'return_format' => 'value',
-                            'key' => 'field_59107510580c5',
-                            'label' => 'Sizes',
-                            'name' => 'column_widths',
-                            'type' => 'select',
-                            'instructions' => '',
-                            'required' => 0,
-                            'conditional_logic' => array (
-                                array (
-                                    array (
-                                        'field' => 'field_59107c430b640',
-                                        'operator' => '==',
-                                        'value' => 'full',
-                                    ),
-                                ),
-                            ),
+                            'conditional_logic' => 0,
                             'wrapper' => array (
                                 'width' => '',
                                 'class' => '',
@@ -200,15 +128,7 @@ acf_add_local_field_group(array (
                             'type' => 'select',
                             'instructions' => '',
                             'required' => 0,
-                            'conditional_logic' => array (
-                                array (
-                                    array (
-                                        'field' => 'field_59107c430b640',
-                                        'operator' => '==',
-                                        'value' => 'summary',
-                                    ),
-                                ),
-                            ),
+                            'conditional_logic' => 0,
                             'wrapper' => array (
                                 'width' => '',
                                 'class' => '',
@@ -294,15 +214,7 @@ acf_add_local_field_group(array (
                             'type' => 'repeater',
                             'instructions' => '',
                             'required' => 0,
-                            'conditional_logic' => array (
-                                array (
-                                    array (
-                                        'field' => 'field_59107c430b640',
-                                        'operator' => '==',
-                                        'value' => 'summary',
-                                    ),
-                                ),
-                            ),
+                            'conditional_logic' => 0,
                             'wrapper' => array (
                                 'width' => '',
                                 'class' => '',
@@ -483,15 +395,7 @@ acf_add_local_field_group(array (
                             'type' => 'repeater',
                             'instructions' => 'Resized and center cropped to 5x3 aspect ratio',
                             'required' => 0,
-                            'conditional_logic' => array (
-                                array (
-                                    array (
-                                        'field' => 'field_59107c430b640',
-                                        'operator' => '==',
-                                        'value' => 'summary',
-                                    ),
-                                ),
-                            ),
+                            'conditional_logic' => 0,
                             'wrapper' => array (
                                 'width' => '',
                                 'class' => '',
@@ -577,15 +481,7 @@ acf_add_local_field_group(array (
                             'type' => 'repeater',
                             'instructions' => '',
                             'required' => 0,
-                            'conditional_logic' => array (
-                                array (
-                                    array (
-                                        'field' => 'field_59107c430b640',
-                                        'operator' => '==',
-                                        'value' => 'summary',
-                                    ),
-                                ),
-                            ),
+                            'conditional_logic' => 0,
                             'wrapper' => array (
                                 'width' => '',
                                 'class' => '',
@@ -671,69 +567,7 @@ acf_add_local_field_group(array (
                             'type' => 'repeater',
                             'instructions' => '',
                             'required' => 0,
-                            'conditional_logic' => array (
-                                array (
-                                    array (
-                                        'field' => 'field_59107c430b640',
-                                        'operator' => '==',
-                                        'value' => 'summary',
-                                    ),
-                                ),
-                            ),
-                            'wrapper' => array (
-                                'width' => '',
-                                'class' => '',
-                                'id' => '',
-                            ),
-                        ),
-                        array (
-                            'tabs' => 'all',
-                            'toolbar' => 'full',
-                            'media_upload' => 1,
-                            'default_value' => '',
-                            'delay' => 1,
-                            'key' => 'field_59107e0b7d745',
-                            'label' => 'First Column',
-                            'name' => 'column_one',
-                            'type' => 'wysiwyg',
-                            'instructions' => '',
-                            'required' => 0,
-                            'conditional_logic' => array (
-                                array (
-                                    array (
-                                        'field' => 'field_59107c430b640',
-                                        'operator' => '==',
-                                        'value' => 'full',
-                                    ),
-                                ),
-                            ),
-                            'wrapper' => array (
-                                'width' => '',
-                                'class' => '',
-                                'id' => '',
-                            ),
-                        ),
-                        array (
-                            'tabs' => 'all',
-                            'toolbar' => 'full',
-                            'media_upload' => 1,
-                            'default_value' => '',
-                            'delay' => 1,
-                            'key' => 'field_59107eef9fa77',
-                            'label' => 'Second Column',
-                            'name' => 'column_two',
-                            'type' => 'wysiwyg',
-                            'instructions' => '',
-                            'required' => 0,
-                            'conditional_logic' => array (
-                                array (
-                                    array (
-                                        'field' => 'field_59107c430b640',
-                                        'operator' => '==',
-                                        'value' => 'full',
-                                    ),
-                                ),
-                            ),
+                            'conditional_logic' => 0,
                             'wrapper' => array (
                                 'width' => '',
                                 'class' => '',
@@ -1026,6 +860,7 @@ acf_add_local_field_group(array (
     ),
     'active' => 1,
     'description' => '',
+    'local' => 'php',
 ));
 
 endif;
