@@ -66,8 +66,8 @@ function fc_repeating_content()
     $layout = get_post_meta(get_the_ID())['_genesis_layout'][0];
 
     while( have_rows( 'rows' ) ): the_row();
-
-      $rowname = get_row()['acf_fc_layout'];
+      $row = get_row();
+      $rowname = $row['acf_fc_layout'];
       $rowclass = 'flexiblecolumns row';
       if( $rowname == 'buttons' )
         $rowclass .= ' collapse';
@@ -76,7 +76,7 @@ function fc_repeating_content()
       $content = sprintf('<div class="%s"', $rowclass);
 
       // Additional row HTML attributes
-      if( $rowname == 'columns' ){
+      if( $rowname == 'columns' && ( !array_key_exists( 'field_59107c430b640', $row ) || $row['field_59107c430b640'] == 'summary' ) ){
 
         $content .= sprintf( ' style="text-align: %s;"', get_sub_field('text_alignment') );
 
