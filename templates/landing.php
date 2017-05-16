@@ -75,27 +75,34 @@ function repeating_content()
     if ( get_field( 'repeating_content' ) && have_rows( 'repeating_content' ) ) { ?>
         <div class="row repeating-content"><?php
         while( have_rows( 'repeating_content' ) ): the_row();
-            $left = array_shift(get_sub_field('left'));
-            $right = array_shift(get_sub_field('right'));
+
+            $leftfield = get_sub_field('left');
+            $left = is_array($leftfield) ? array_shift($leftfield) : array();
+
+            $rightfield = get_sub_field('right');
+            $right = is_array($rightfield) ? array_shift($rightfield) : array();
+
             $imgpattern = '/.(jpeg|jpg|png|gif)$/i';
-            $imgreplacement = '-483x272.$1'; ?>
+            $imgreplacement = '-483x272.$1';
+
+            ?>
             <div class="row">
                 <div class="small-12 medium-6 large-6 columns"><?php
                 if( $left ){
-                    if( $left['image'] ){ ?>
+                    if( array_key_exists('image', $left) && $left['image'] ){ ?>
                     <div class="image text-center"><img src="<?php echo preg_replace($imgpattern, $imgreplacement, $left['image']); ?>"></div><?php
                     }
-                    if( $right['description'] ){ ?>
+                    if( array_key_exists('description', $left) && $left['description'] ){ ?>
                     <div class="description medium-only-text-justify large-only-text-justify"><?php echo $left['description']; ?></div><?php
                     }
                 } ?>
                 </div>
                 <div class="small-12 medium-6 large-6 columns"><?php
                 if( $right ){
-                    if( $right['image'] ){ ?>
+                    if( array_key_exists('image', $right) && $right['image'] ){ ?>
                     <div class="image text-center"><img src="<?php echo preg_replace($imgpattern, $imgreplacement, $right['image']); ?>"></div><?php
                     }
-                    if( $right['description'] ){ ?>
+                    if( array_key_exists('description', $right) && $right['description'] ){ ?>
                     <div class="description medium-only-text-justify large-only-text-justify"><?php echo $right['description']; ?></div><?php
                     }
                 } ?>
