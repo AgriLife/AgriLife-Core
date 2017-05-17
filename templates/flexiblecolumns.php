@@ -8,11 +8,27 @@ if ( !get_field( 'show_page_title' ) ){
   remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
 }
 
-// Add assets
+// Register styles
 add_action( 'wp_enqueue_scripts', 'fc_register_styles' );
 add_action( 'wp_enqueue_scripts', 'fc_enqueue_styles' );
-add_action( 'wp_enqueue_scripts', 'fc_register_js' );
-add_action( 'wp_footer', 'fc_enqueue_js' );
+
+// Register JavaScript as needed
+$rowtypes = array();
+foreach( get_fields()['rows'] as $field ){
+  $rowtypes[] = $field['acf_fc_layout'];
+}
+if( in_array('publications', $rowtypes) ){
+
+  add_action( 'wp_enqueue_scripts', 'fc_register_lightboxjs' );
+  add_action( 'wp_footer', 'fc_enqueue_lightboxjs' );
+
+}
+if( in_array('accordion', $rowtypes) ){
+
+  add_action( 'wp_enqueue_scripts', 'fc_register_accordionjs' );
+  add_action( 'wp_footer', 'fc_enqueue_accordionjs' );
+
+}
 
 function fc_register_styles() {
 
@@ -32,13 +48,7 @@ function fc_enqueue_styles(){
 
 }
 
-function fc_register_js() {
-
-  wp_register_script( 'fc_template_accordion_script',
-    AG_CORE_DIR_URL . 'js/flexiblecolumns_accordion.js',
-    false,
-    true
-  );
+function fc_register_lightboxjs() {
 
   wp_register_script( 'fc_template_lightbox_script',
     AG_CORE_DIR_URL . 'js/flexiblecolumns_lightbox.js',
@@ -48,13 +58,29 @@ function fc_register_js() {
 
 }
 
-function fc_enqueue_js() {
+function fc_enqueue_lightboxjs() {
 
-  wp_enqueue_script( 'fc_template_accordion_script' );
   wp_enqueue_script( 'fc_template_lightbox_script' );
 
 }
 
+function fc_register_accordionjs() {
+
+  wp_register_script( 'fc_template_accordion_script',
+    AG_CORE_DIR_URL . 'js/flexiblecolumns_accordion.js',
+    false,
+    true
+  );
+
+}
+
+function fc_enqueue_accordionjs() {
+
+  wp_enqueue_script( 'fc_template_accordion_script' );
+
+}
+
+// Display content
 add_action( 'genesis_entry_content', 'fc_repeating_content' );
 
 function fc_repeating_content()
