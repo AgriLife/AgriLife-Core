@@ -3,12 +3,12 @@
 	var openlinks = document.querySelectorAll('.flexiblecolumns.row .publications a.open'),
 			closelinks = document.querySelectorAll('.flexiblecolumns.row .publications a.close');
 
-	for(var i = 0; i < openlinks.length; i++){
-		openlinks[i].onclick = fcLightbox;
+	for(var m = 0; m < openlinks.length; m++){
+		openlinks[m].onclick = fcLightbox;
 	}
 
-	for(var i = 0; i < closelinks.length; i++){
-		closelinks[i].onclick = fcLightboxClose;
+	for(var n = 0; n < closelinks.length; n++){
+		closelinks[n].onclick = fcLightboxClose;
 	}
 
 	function fcLightbox(e){
@@ -33,9 +33,9 @@
 	function removeClass(classname, classattr){
 
 		var arr = classattr.split(' ');
-		for(var i = 0; i < arr.length; i++){
-			if(arr[i] == classname){
-				arr.splice(i, 1);
+		for(var o = 0; o < arr.length; o++){
+			if(arr[o] == classname){
+				arr.splice(o, 1);
 				break;
 			}
 		}

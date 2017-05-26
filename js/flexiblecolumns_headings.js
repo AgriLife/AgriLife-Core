@@ -3,20 +3,20 @@ if(typeof resizeACFlexibleColumnsHeadings != 'function'){
   var resizeACFlexibleColumnsHeadings = function(headings){
     var maxHeight = 0;
 
-    for(var j = 0; j < headings.length; j++){
-      var height = headings[j].childNodes[0].getBoundingClientRect().height;
+    for(var k = 0; k < headings.length; k++){
+      var height = headings[k].childNodes[0].getBoundingClientRect().height;
       if(height > maxHeight){
         maxHeight = Math.ceil(height);
       }
     }
 
-    for(var j = 0; j < headings.length; j++){
+    for(var l = 0; l < headings.length; l++){
       if(window.innerWidth <= 710){
         // Mobile columns do not have headings in the same row
-        headings[j].style.height = '';
+        headings[l].style.height = '';
       } else {
         // Resize headings in the same row
-        headings[j].style.height = maxHeight + 'px';
+        headings[l].style.height = maxHeight + 'px';
       }
     }
   };

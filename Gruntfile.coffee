@@ -31,7 +31,7 @@ module.exports = (grunt) ->
           sourcemap: true
           noLineComments: true
     jshint:
-      files: ['js/src/*.js']
+      files: ['js/*.js']
       options:
         globals:
           jQuery: true
@@ -83,7 +83,7 @@ module.exports = (grunt) ->
   @loadNpmTasks 'grunt-gh-release'
 
   @registerTask 'default', ['sasslint', 'compass:dev']
-  @registerTask 'develop', ['sasslint', 'compass:dev', 'jshint']
+  @registerTask 'develop', ['compass:dev', 'sasslint', 'jshint']
   @registerTask 'package', ['compass:pkg']
   @registerTask 'release', ['compress', 'setreleasemsg', 'gh_release']
   @registerTask 'setreleasemsg', 'Set release message as range of commits', ->
