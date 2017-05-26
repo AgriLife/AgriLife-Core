@@ -1,3 +1,18 @@
+@import "compass";
+@mixin custom-button($color){
+	$hue: hue($color);
+	$saturation: saturation($color);
+	$lightness: lightness($color);
+	$bottomcolor: hsl($hue, $saturation + 11%, $lightness - 12%);
+	background-color: $color;
+	@include background-image(linear-gradient($color, $bottomcolor));
+
+	&:hover {
+		background-color: $bottomcolor;
+		@include background-image(linear-gradient($bottomcolor, $bottomcolor));
+	}
+}
+
 body.fc-lightbox-opened {
 	overflow: hidden;
 	padding-right: 15px;
@@ -21,103 +36,115 @@ body.fc-lightbox-opened {
 				text-decoration: underline;
 			}
 		}
-	}
 
-	.publications {
-
-		ul {
-			padding-left: 0;
-			margin: 0;
-			list-style: none;
+		.maroon-button {
+			@include custom-button(#500000);
 		}
 
-		li {
-			list-style: none;
-			margin-top: 2px;
+		.darkgray-button {
+			@include custom-button(#56565A);
+		}
 
-			> a {
-				border: 1px solid #E2E2E2;
-				border-radius: 4px;
-				text-decoration: none;
-				font-weight: bold;
-				display: block;
-				position: relative;
-				padding: 10px 15px;
-				color: #003C71;
+		.darkblue-button {
+			@include custom-button(#003A5D);
+		}
 
-				&:hover, &:focus {
-					color: #0068C1;
-					background-color: #EEE;
-				}
+		.publications {
 
-				.description {
-					font-size: 0.9rem;
-					font-weight: normal;
-					line-height: 1.5em;
-					color: #777;
-				}
+			ul {
+				padding-left: 0;
+				margin: 0;
+				list-style: none;
 			}
 
-			.overlay {
-				display: none;
-				background: rgba(0, 0, 0, 0.5);
-				z-index: 999;
-				overflow-x: hidden;
-				overflow-y: auto;
+			li {
+				list-style: none;
+				margin-top: 2px;
 
-				&.opened {
+				> a {
+					border: 1px solid #E2E2E2;
+					border-radius: 4px;
+					text-decoration: none;
+					font-weight: bold;
 					display: block;
+					position: relative;
+					padding: 10px 15px;
+					color: #003C71;
 
-					.wrap {
-						margin-top: 40px;
+					&:hover, &:focus {
+						color: #0068C1;
+						background-color: #EEE;
+					}
+
+					.description {
+						font-size: 0.9rem;
+						font-weight: normal;
+						line-height: 1.5em;
+						color: #777;
 					}
 				}
 
-				&, & > .close {
-					position: fixed;
-					left: 0;
-					top: 0;
-					right: 0;
-					bottom: 0;
-				}
+				.overlay {
+					display: none;
+					background: rgba(0, 0, 0, 0.5);
+					z-index: 999;
+					overflow-x: hidden;
+					overflow-y: auto;
 
-				> .close {
-					display: block;
-				}
+					&.opened {
+						display: block;
 
-				.wrap {
-					position: absolute;
-					width: 76%;
-					left: 50%;
-					margin-left: -38%;
-					margin-top: 0;
-					border: 1px solid #999;
-					border: 1px solid rgba(0, 0, 0, 0.2); // sass-lint:disable-line no-duplicate-properties
-					background: #fff;
-					border-radius: 6px;
-					box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-					padding: 20px;
-
-					.inner {
-						h2, h3, h4, h5, h6 {
-							&:first-child {
-								margin-top: 0;
-							}
+						.wrap {
+							margin-top: 40px;
 						}
 					}
 
-					> .close {
-						position: absolute;
-						right: 0;
+					&, & > .close {
+						position: fixed;
+						left: 0;
 						top: 0;
-						width: 36px;
-						height: 36px;
-						font-size: 21px;
-						line-height: 36px;
-						font-weight: bold;
-						color: #757575;
-						text-align: center;
-						text-decoration: none;
+						right: 0;
+						bottom: 0;
+					}
+
+					> .close {
+						display: block;
+					}
+
+					.wrap {
+						position: absolute;
+						width: 76%;
+						left: 50%;
+						margin-left: -38%;
+						margin-top: 0;
+						border: 1px solid #999;
+						border: 1px solid rgba(0, 0, 0, 0.2); // sass-lint:disable-line no-duplicate-properties
+						background: #fff;
+						border-radius: 6px;
+						box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+						padding: 20px;
+
+						.inner {
+							h2, h3, h4, h5, h6 {
+								&:first-child {
+									margin-top: 0;
+								}
+							}
+						}
+
+						> .close {
+							position: absolute;
+							right: 0;
+							top: 0;
+							width: 36px;
+							height: 36px;
+							font-size: 21px;
+							line-height: 36px;
+							font-weight: bold;
+							color: #757575;
+							text-align: center;
+							text-decoration: none;
+						}
 					}
 				}
 			}

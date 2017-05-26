@@ -8,11 +8,11 @@ if ( !get_field( 'show_page_title' ) ){
   remove_action( 'genesis_entry_header', 'genesis_do_post_title' );
 }
 
-// Register styles
+// Queue styles
 add_action( 'wp_enqueue_scripts', 'fc_register_styles' );
 add_action( 'wp_enqueue_scripts', 'fc_enqueue_styles' );
 
-// Register JavaScript as needed
+// Queue JavaScript as needed
 $rowtypes = array();
 foreach( get_fields()['rows'] as $field ){
   $rowtypes[] = $field['acf_fc_layout'];
@@ -30,6 +30,7 @@ if( in_array('accordion', $rowtypes) ){
 
 }
 
+// Register asset functions
 function fc_register_styles() {
 
   wp_register_style(
@@ -126,7 +127,14 @@ function fc_repeating_content()
         $cols = (12 - 12 % $count) / $count;
 
         foreach( $subfield as $button ){
-          $content .= sprintf( '<div class="small-12 medium-%s large-%s columns"><a class="button fc-button" style="%s" href="%s">%s</a></div>', $cols, $cols, 'max-width:100%;', $button['link'], $button['text'] );
+
+          $color = '';
+          if( array_key_exists('color', $button) && $button['color'] != 'default'){
+            $color = $button['color'] . '-button ';
+          }
+
+          $content .= sprintf( '<div class="small-12 medium-%s large-%s columns"><a class="button %sfc-button" style="%s" href="%s">%s</a></div>', $cols, $cols, $color, 'max-width:100%;', $button['link'], $button['text'] );
+
         }
 
         $content .= '<script type="text/javascript">' . file_get_contents(AG_CORE_DIR_PATH . 'js/flexiblecolumns_buttons.js') . '</script>';
