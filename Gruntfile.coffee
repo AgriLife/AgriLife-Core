@@ -19,10 +19,17 @@ module.exports = (grunt) ->
         dest: '/js/src/'
         ext: '.js'
     compass:
-      dist:
+      pkg:
         options:
           config: 'config.rb'
-          specify: ['css/src/*.scss']
+          force: true
+      dev:
+        options:
+          config: 'config.rb'
+          force: true
+          outputStyle: 'expanded'
+          sourcemap: true
+          noLineComments: true
     jshint:
       files: ['js/src/*.js']
       options:
@@ -32,34 +39,10 @@ module.exports = (grunt) ->
           module: true
           document: true
         force: true
-    csslint:
+    sasslint:
       options:
-        'star-property-hack': false
-        'duplicate-properties': false
-        'unique-headings': false
-        'ids': false
-        'display-property-grouping': false
-        'floats': false
-        'outline-none': false
-        'box-model': false
-        'adjoining-classes': false
-        'box-sizing': false
-        'universal-selector': false
-        'font-sizes': false
-        'overqualified-elements': false
-        'important': false
-        'regex-selectors': false
-        'qualified-headings': false
-        'fallback-colors': false
-        force: true
-      src: ['css/*.css']
-    concat:
-      adminjs:
-        src: ['js/src/admin-*.js']
-        dest: 'js/admin.min.js'
-      publicjs:
-        src: ['js/src/public-*.js']
-        dest: 'js/public.min.js'
+        configFile: '.sass-lint.yml'
+      target: ['css/src/*.scss']
     compress:
       main:
         options:
@@ -94,15 +77,14 @@ module.exports = (grunt) ->
   @loadNpmTasks 'grunt-contrib-coffee'
   @loadNpmTasks 'grunt-contrib-compass'
   @loadNpmTasks 'grunt-contrib-jshint'
-  @loadNpmTasks 'grunt-contrib-csslint'
-  @loadNpmTasks 'grunt-contrib-concat'
+  @loadNpmTasks 'grunt-sass-lint'
   @loadNpmTasks 'grunt-contrib-watch'
   @loadNpmTasks 'grunt-contrib-compress'
   @loadNpmTasks 'grunt-gh-release'
 
-  @registerTask 'default', ['compass', 'concat']
-  @registerTask 'develop', ['compass', 'jshint', 'csslint', 'concat']
-  @registerTask 'package', ['default', 'csslint', 'jshint']
+  @registerTask 'default', ['sasslint', 'compass:dev']
+  @registerTask 'develop', ['sasslint', 'compass:dev', 'jshint']
+  @registerTask 'package', ['compass:pkg']
   @registerTask 'release', ['compress', 'setreleasemsg', 'gh_release']
   @registerTask 'setreleasemsg', 'Set release message as range of commits', ->
     done = @async()

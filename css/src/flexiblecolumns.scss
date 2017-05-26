@@ -1,5 +1,5 @@
 @import "compass";
-@mixin custom-button($color){
+@mixin custom-button($color) {
 	$hue: hue($color);
 	$saturation: saturation($color);
 	$lightness: lightness($color);
@@ -119,7 +119,7 @@ body.fc-lightbox-opened {
 						margin-top: 0;
 						border: 1px solid #999;
 						border: 1px solid rgba(0, 0, 0, 0.2); // sass-lint:disable-line no-duplicate-properties
-						background: #fff;
+						background: #FFF;
 						border-radius: 6px;
 						box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
 						padding: 20px;
