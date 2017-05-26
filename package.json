@@ -1,6 +1,6 @@
 {
   "name": "agrilife-core",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Core functionality plugin for all Texas A&M AgriLife sites",
   "main": "agrilife-core.php",
   "scripts": {
@@ -9,10 +9,8 @@
   "repository": "https://github.com/agrilife/agrilife-core",
   "author": "J. Aaron Eaton, Zachary Watkins",
   "license": "GPL-2.0+",
-  "devDependencies": {
-    "grunt-contrib-jshint": "~0.7.2",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-sass-lint": "^0.2.2"
+  "engines": {
+    "node": "4.0.0"
   },
   "dependencies": {
     "curlrequest": "~0.3.10",
@@ -22,5 +20,10 @@
     "grunt-contrib-compress": "~1.4.3",
     "grunt-gh-release": "0.0.2",
     "underscore": "~1.8.3"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-contrib-watch": "~0.5.3",
+    "grunt-sass-lint": "^0.2.2"
   }
 }

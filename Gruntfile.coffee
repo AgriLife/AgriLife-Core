@@ -76,11 +76,11 @@ module.exports = (grunt) ->
 
   @loadNpmTasks 'grunt-contrib-coffee'
   @loadNpmTasks 'grunt-contrib-compass'
+  @loadNpmTasks 'grunt-contrib-compress'
+  @loadNpmTasks 'grunt-gh-release'
   @loadNpmTasks 'grunt-contrib-jshint'
   @loadNpmTasks 'grunt-sass-lint'
   @loadNpmTasks 'grunt-contrib-watch'
-  @loadNpmTasks 'grunt-contrib-compress'
-  @loadNpmTasks 'grunt-gh-release'
 
   @registerTask 'default', ['sasslint', 'compass:dev']
   @registerTask 'develop', ['compass:dev', 'sasslint', 'jshint']
