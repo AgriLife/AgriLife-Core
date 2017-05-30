@@ -8,16 +8,6 @@ module.exports = (grunt) ->
         '**/*.scss'
       ]
       tasks: ['develop']
-    coffee:
-      compile:
-        options:
-          bare: true
-          sourceMap: true
-        expand: true
-        cwd: '/js/src/coffee'
-        src: ['*.coffee']
-        dest: '/js/src/'
-        ext: '.js'
     compass:
       pkg:
         options:
@@ -74,7 +64,6 @@ module.exports = (grunt) ->
           file: 'AgriLife-Core.zip'
           'Content-Type': 'application/zip'
 
-  @loadNpmTasks 'grunt-contrib-coffee'
   @loadNpmTasks 'grunt-contrib-compass'
   @loadNpmTasks 'grunt-contrib-compress'
   @loadNpmTasks 'grunt-gh-release'
