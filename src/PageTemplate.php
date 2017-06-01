@@ -145,6 +145,9 @@ class PageTemplate {
 
 		global $post;
 
+		if(!is_object($post))
+			return $template;
+
 		$expected_template =  get_post_meta( $post->ID, '_wp_page_template', true );
 
 		if ( ! $expected_template ) {
