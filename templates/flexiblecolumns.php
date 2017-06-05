@@ -13,21 +13,24 @@ add_action( 'wp_enqueue_scripts', 'fc_register_styles' );
 add_action( 'wp_enqueue_scripts', 'fc_enqueue_styles' );
 
 // Queue JavaScript as needed
-$rowtypes = array();
-foreach( get_fields()['rows'] as $field ){
-  $rowtypes[] = $field['acf_fc_layout'];
-}
-if( in_array('publications', $rowtypes) ){
+if(array_key_exists('rows', get_fields())){
+  $rowtypes = array();
 
-  add_action( 'wp_enqueue_scripts', 'fc_register_lightboxjs' );
-  add_action( 'wp_footer', 'fc_enqueue_lightboxjs' );
+  foreach( get_fields()['rows'] as $field ){
+    $rowtypes[] = $field['acf_fc_layout'];
+  }
+  if( in_array('publications', $rowtypes) ){
 
-}
-if( in_array('accordion', $rowtypes) ){
+    add_action( 'wp_enqueue_scripts', 'fc_register_lightboxjs' );
+    add_action( 'wp_footer', 'fc_enqueue_lightboxjs' );
 
-  add_action( 'wp_enqueue_scripts', 'fc_register_accordionjs' );
-  add_action( 'wp_footer', 'fc_enqueue_accordionjs' );
+  }
+  if( in_array('accordion', $rowtypes) ){
 
+    add_action( 'wp_enqueue_scripts', 'fc_register_accordionjs' );
+    add_action( 'wp_footer', 'fc_enqueue_accordionjs' );
+
+  }
 }
 
 // Register asset functions
