@@ -93,8 +93,6 @@ function fc_repeating_content()
   if ( get_field( 'rows' ) && have_rows( 'rows' ) ) { ?>
     <div class="rows"><?php
 
-    $layout = get_post_meta(get_the_ID())['_genesis_layout'][0];
-
     while( have_rows( 'rows' ) ): the_row();
       $row = get_row();
       $rowname = $row['acf_fc_layout'];
