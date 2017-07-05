@@ -43,7 +43,7 @@ module.exports = (grunt) ->
           {src: ['js/*.js']},
           {src: ['src/**']},
           {src: ['templates/**']},
-          {src: ['vendor/**', '!vendor/composer/autoload_static.php']},
+          {src: ['vendor/**']},
           {src: ['agrilife-core.php']},
           {src: ['README.md']},
         ]
