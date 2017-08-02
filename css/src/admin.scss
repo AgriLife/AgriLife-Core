@@ -3,6 +3,10 @@ $images: "58349ad66ded1";
 $links: "58349cf9486f1";
 $descriptions: "58349be6486ee";
 
+// Cells plugin
+$cp-repeater: "597668026c785";
+$cp-summary-wysiwyg: "59766d3c6c78c";
+
 @media screen and (min-width: 782px) {
 	.acf-field {
 
@@ -111,7 +115,8 @@ $descriptions: "58349be6486ee";
 	&[data-name="accordion_content"] #add_gform,
 	&[data-name="accordion_content"] #soliloquy-media-modal-button,
 	&.acf-field-wysiwyg .acf-editor-wrap[data-toolbar="simple_text"] .mce-menubar,
-	&.acf-field-wysiwyg .acf-editor-wrap[data-toolbar="simple_title"] .mce-menubar {
+	&.acf-field-wysiwyg .acf-editor-wrap[data-toolbar="simple_title"] .mce-menubar,
+	&.acf-field-59766d746c78d .acf-label {
 		display: none;
 	}
 
@@ -154,6 +159,69 @@ $descriptions: "58349be6486ee";
 				}
 				@media screen and (min-width: 1767px) {
 					height: 33.2 + $line-height * 1;
+				}
+			}
+		}
+	}
+
+	// [Plugin] AgriLife Flexible Columns Addon: Cells
+	&.acf-field-#{$cp-repeater} {
+
+		.acf-fields.-left > &.acf-field::before {
+			bottom: auto;
+			height: 44px;
+			width: 100%;
+			border-width: 0 0 1px 0;
+		}
+
+		.acf-fields.-left > & > .acf-label {
+			text-align: center;
+			width: 100%;
+		}
+
+		.acf-fields.-left > & > .acf-input {
+			width: 100%;
+		}
+
+		.acf-fields {
+			padding-top: 7px!important; // sass-lint:disable-line no-important
+			padding-bottom: 15px!important; // sass-lint:disable-line no-important
+		}
+
+		.acf-field {
+			border-top-width: 0;
+			padding-bottom: 0;
+			padding-top: 8px;
+		}
+
+		.acf-field:not(.acf-field-wysiwyg) {
+			@media screen and (min-width:  480px) {
+				.acf-label {
+					float: left;
+					width: 20%;
+					line-height: 26px;
+					margin-bottom: 0;
+				}
+				.acf-input {
+					float: left;
+					width: 80%;
+				}
+			}
+		}
+
+		.acf-field.acf-field-wysiwyg {
+			.acf-label {
+				display: none;
+			}
+
+			&.acf-field-#{$cp-summary-wysiwyg} {
+				$height: 170px;
+
+				textarea[name*="field_#{$cp-summary-wysiwyg}"] {
+					height: $height !important; // sass-lint:disable-line no-important
+				}
+				.acf-editor-wrap iframe {
+					min-height: ($height - 17px);
 				}
 			}
 		}

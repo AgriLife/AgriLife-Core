@@ -104,9 +104,11 @@ function fc_repeating_content()
       $content = sprintf('<div class="%s"', $rowclass);
 
       // Additional row HTML attributes
-      if( $rowname == 'columns' && ( !array_key_exists( 'field_59107c430b640', $row ) || $row['field_59107c430b640'] == 'summary' ) ){
+      if( $rowname == 'columns' && ( !array_key_exists( 'field_59107c430b640', $row ) || strpos( $row['field_59107c430b640'], 'summary' ) !== false ) ){
 
-        $content .= sprintf( ' style="text-align: %s;"', get_sub_field('text_alignment') );
+        $text_align_field = get_sub_field('type') != 'cells_summary' ? 'text_alignment' : 'cells_text_alignment';
+
+        $content .= sprintf( ' style="text-align: %s;"', get_sub_field( $text_align_field ) );
 
       } else if( $rowname == 'buttons' ){
 
@@ -148,24 +150,104 @@ function fc_repeating_content()
 
       } else if( $rowname == 'columns' ){
 
+        // Get the type of content to render, if present
+        $columntype = get_sub_field('type');
+
         // Get number of columns
-        $count = (int)get_sub_field( 'count' );
+        $countname = 'count';
+        if( $columntype && ( $columntype == 'cells_summary' || $columntype == 'cells_full' ) )
+          $countname = 'cells_per_row';
+
+        $count = (int)get_sub_field( $countname );
 
         // Add the row title
         $title = get_sub_field( 'columns_title' );
         if ( $title ){
-          $content .= '<div class="small-12 medium-12 large-12 columns"><h2>' . $title . '</h2></div>';
+          $content .= '<div class="row"><div class="small-12 medium-12 large-12 columns"><h2>' . $title . '</h2></div></div>';
         }
 
         // Get the type of content to render
-        $type = get_sub_field( 'type' );
 
-        if( $type == 'full' ){
+        if( $columntype == 'full' ){
 
           // Full content in two columns
           $leftcol = (int)get_sub_field('column_widths');
           $content .= sprintf( '<div class="small-12 medium-%s large-%s columns">%s</div>', $leftcol, $leftcol, get_sub_field('column_one') );
           $content .= sprintf( '<div class="small-12 medium-%s large-%s columns">%s</div>', 12 - $leftcol, 12 - $leftcol, get_sub_field('column_two') );
+
+        } else if( $columntype == 'cells_summary' ){
+
+          // Cells addon, summaries
+          $content .= '<div>';
+
+          foreach(get_sub_field('cells_content') as $key=>$cell){
+
+            $cellindex = $key%$count;
+            $cellsinrow = get_sub_field('cells_per_row');
+            $cols = $cellsinrow == 2 ? get_sub_field('cells_widths') : 4;
+            if($cellsinrow == 2 && $cellindex == 1)
+              $cols = 12 - $cols;
+
+            $heading = $cell['heading'];
+            $img = $cell['image_'.$cellsinrow.'col'];
+            $desc = $cell['description'];
+            $link = $cell['link'];
+            $linkopen = $linkclose = '';
+
+            // Initialize new row
+            if( $key > 0 && $cellindex == 0 ){
+              // first cell of new row
+              $content .= sprintf('<script type="text/javascript">%s</script></div><div>',
+                file_get_contents(AG_CORE_DIR_PATH . 'js/flexiblecolumns_headings.js')
+              );
+            }
+
+            if( $link != '' ){
+              $linkopen = '<a href="' . $link . '" style="display:block">';
+              $linkclose = '</a>';
+            }
+
+            if( $heading != '' ){
+              $heading = '<h3 class="summary-heading"><span>' . $heading . '</span></h3>';
+            }
+
+            if( $img != '' ){
+              $sizename = 'template-flexcolumns-' . $count;
+              $img = sprintf( '<img src="%s" alt="%s"/>', $img['sizes'][$sizename], $img['alt'] );
+              if( $link != '' )
+                $linkopen = str_replace('<a ', '<a class="flexible-columns-image-link" ', $linkopen);
+              if( $desc != '' )
+                $linkclose .= '<br>';
+            }
+
+            $content .= sprintf( '<div class="small-12 medium-%s large-%s columns summary">%s%s%s%s%s</div>', $cols, $cols, $linkopen, $heading, $img, $linkclose, $desc );
+          }
+
+          $content .= '</div>';
+
+        } else if( $columntype == 'cells_full' ){
+
+          // Cells addon, full wysiwyg
+          $content .= '<div>';
+
+          foreach(get_sub_field('cells_content') as $key=>$cell){
+
+            $cellindex = $key%$count;
+            $cellsinrow = get_sub_field('cells_per_row');
+            $cols = $cellsinrow == 2 ? get_sub_field('cells_widths') : 4;
+            if($cellsinrow == 2 && $cellindex == 1)
+              $cols = 12 - $cols;
+
+            // Initialize new row
+            if( $key > 0 && $cellindex == 0 ){
+              // first cell of new row
+              $content .= '</div><div>';
+            }
+
+            $content .= sprintf( '<div class="small-12 medium-%s large-%s columns summary">%s</div>', $cols, $cols, $cell['cell'] );
+          }
+
+          $content .= '</div>';
 
         } else {
 
