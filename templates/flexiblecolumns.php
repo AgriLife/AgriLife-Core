@@ -255,17 +255,18 @@ function fc_repeating_content()
           $headings = get_sub_field( 'headings' )[0];
           $descriptions = get_sub_field( 'descriptions' )[0];
           $links = get_sub_field( 'links' )[0];
-          $images = get_sub_field( 'images' )[0];
+          $image_sub_field = get_sub_field( 'images' )[0];
+          $images = array();
 
           // Remove unused fields
-          if($images){
+          if($image_sub_field){
             if($count == 2){
-              array_pop($images);
-              array_pop($images);
-              array_pop($images);
+              $images['image1of2'] = $image_sub_field['image1of2'];
+              $images['image2of2'] = $image_sub_field['image2of2'];
             } else {
-              array_shift($images);
-              array_shift($images);
+              $images['image1of3'] = $image_sub_field['image1of3'];
+              $images['image2of3'] = $image_sub_field['image2of3'];
+              $images['image3of3'] = $image_sub_field['image3of3'];
             }
           }
 
@@ -360,5 +361,4 @@ function fc_repeating_content()
     </div><?php
   }
 }
-
 genesis();
