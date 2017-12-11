@@ -65,5 +65,4 @@ js/src
 AgriLife-Core.zip
 
 # VIP Scanner files
-**/
-!wp-content
+../../../wp-admin
