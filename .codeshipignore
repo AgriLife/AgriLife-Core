@@ -6,6 +6,7 @@
 *.bak
 *.swp
 Thumbs.db
+wp-config.php
 
 # large/disallowed file types
 # a CDN should be used for these
@@ -61,5 +62,8 @@ werker.yml
 .editorconfig
 css/src
 js/src
-
 AgriLife-Core.zip
+
+# VIP Scanner files
+**/
+!wp-content
