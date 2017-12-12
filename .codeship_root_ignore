@@ -1,5 +1,7 @@
-# VIP Scanner files
-/wp-config.php
-/index.php
-/*/
+/*.*
+/wp-admin
+/wp-includes
+/wp-content/*.*
+/wp-content/themes
+/wp-content/plugins/*
 !/wp-content/plugins/AgriLife-Core
