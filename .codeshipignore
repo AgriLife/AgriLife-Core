@@ -48,6 +48,8 @@ package.json
 config.rb
 node_modules
 .sass-cache
+.bowerrc
+.sass-lint.yml
 *.md
 *.txt
 *.ai
