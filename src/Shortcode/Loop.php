@@ -12,18 +12,18 @@ class Loop {
 
 	public function loop_shortcode( $atts, $content = null ) {
 
-		extract( shortcode_atts( array(
+		$extracted = shortcode_atts( array(
 			'pagination' => 'true',
 			'query' => '',
 			'category' => '',
 			'post_type' => 'any',
 			'posts_per_page' => -1,
-		), $atts ));
+		), $atts );
 
 		$args = array(
-			'post_type' => $post_type,
-			'category_name' => $category,
-			'posts_per_page' => $posts_per_page,
+			'post_type' => $extracted['post_type'],
+			'category_name' => $extracted['category'],
+			'posts_per_page' => $extracted['posts_per_page'],
 			'orderby' => 'menu_order',
 			'order' => 'DESC',
 		);
