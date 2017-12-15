@@ -119,6 +119,8 @@ module.exports = (grunt) ->
         knownissues = grunt.file.readJSON('known-issues.json')
         grunt.log.writeln(knownissues.length + ' known issues')
         # Display current issues info
+        grunt.log.writeln('Stdout string length: ' + result.stdout.length)
+        fgrunt.log.writeln('Stdout string snippet: ' + result.stdout.substring(0,500))
         jsonstartindex = result.stdout.indexOf('[{')
         jsonendindex = result.stdout.lastIndexOf('}]')
         results = result.stdout.slice(jsonstartindex, jsonendindex) + '}]'
