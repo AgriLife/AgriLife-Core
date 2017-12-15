@@ -33,6 +33,9 @@ module.exports = (grunt) ->
       options:
         configFile: '.sass-lint.yml'
       target: ['css/src/*.scss']
+    shell:
+      vipscan:
+        command: 'php wp-cli.phar vip-scanner scan-theme --theme="../plugins/AgriLife-Core" --scan_type="VIP Theme Review" --summary=0 --format=json'
     compress:
       main:
         options:
@@ -70,9 +73,11 @@ module.exports = (grunt) ->
   @loadNpmTasks 'grunt-contrib-jshint'
   @loadNpmTasks 'grunt-sass-lint'
   @loadNpmTasks 'grunt-contrib-watch'
+  @loadNpmTasks 'grunt-shell'
 
   @registerTask 'default', ['sasslint', 'compass:dev']
   @registerTask 'develop', ['compass:dev', 'sasslint', 'jshint']
+  @registerTask 'scan', ['shell']
   @registerTask 'package', ['compass:pkg']
   @registerTask 'release', ['compress', 'setreleasemsg', 'gh_release']
   @registerTask 'setreleasemsg', 'Set release message as range of commits', ->
@@ -99,6 +104,49 @@ module.exports = (grunt) ->
         message = result.stdout.replace /(\n)\s\s+/g, '$1- '
         message = message.replace /\s*\[skip ci\]/g, ''
         grunt.config 'gh_release.release.body', message
+      done(err)
+      return
+    return
+  @registerTask 'phpscan', 'Compare results of vip-scanner with known issues', ->
+    done = @async()
+    grunt.util.spawn {
+      cmd: 'grunt'
+      args: ['scan']
+    }, (err, result, code) ->
+      if result.stdout isnt ''
+        grunt.log.writeln('--- VIP Scanner Results ---')
+        # Display known issues info
+        knownissues = grunt.file.readJSON('known-issues.json')
+        grunt.log.writeln(knownissues.length + ' known issues')
+        # Display current issues info
+        jsonstartindex = result.stdout.indexOf('[{')
+        jsonendindex = result.stdout.lastIndexOf('}]')
+        results = result.stdout.slice(jsonstartindex, jsonendindex) + '}]'
+        currentissues = JSON.parse(results)
+        grunt.log.writeln(currentissues.length + ' current issues')
+        # Display new issues
+        newissues = []
+        i = 0
+        while i < currentissues.length
+          add = true
+          j = 0
+          while j < knownissues.length
+            if currentissues[i].toString() == knownissues[j].toString()
+              add = false
+            j++
+          if add
+            newissues.push currentissues[i]
+          i++
+        grunt.log.writeln(newissues.length + ' new issues:')
+        i = 0
+        while i < newissues.length
+          obj = newissues[i]
+          msg = obj.level + ': '
+          msg += obj.description + '('
+          msg += obj.lines.join(', ') + ')'
+          msg += ' in ' + obj.file
+          grunt.log.writeln msg
+          i++
       done(err)
       return
     return
