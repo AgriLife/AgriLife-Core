@@ -35,7 +35,7 @@ module.exports = (grunt) ->
       target: ['css/src/*.scss']
     shell:
       vipscan:
-        command: 'php wp-cli.phar vip-scanner scan-theme --theme="../plugins/AgriLife-Core" --scan_type="VIP Theme Review" --summary=0 --format=json'
+        command: 'php ../../../wp-cli.phar vip-scanner scan-theme --theme="../plugins/AgriLife-Core" --scan_type="VIP Theme Review" --summary=0 --format=json'
     compress:
       main:
         options:
