@@ -108,6 +108,7 @@ module.exports = (grunt) ->
     grunt.log.writeln('--- VIP Scanner Results ---')
     # Known issues
     known_issues = grunt.file.readJSON 'known-issues.json'
+    known_issues_string = grunt.file.read 'known-issues.json'
     grunt.log.writeln(known_issues.length + ' known issues')
     # Current issues
     current_issues = grunt.file.read 'vipscan.json'
