@@ -106,34 +106,29 @@ module.exports = (grunt) ->
   @registerTask 'phpscan', 'Compare results of vip-scanner with known issues', ->
     done = @async()
     grunt.log.writeln('--- VIP Scanner Results ---')
-    # Display known issues info
-    knownissues = grunt.file.readJSON 'known-issues.json'
-    grunt.log.writeln(knownissues.length + ' known issues')
-    # Display current issues info
-    currentissues = grunt.file.read 'vipscan.json'
-    jsonstartindex = currentissues.indexOf '[{'
-    jsonendindex = currentissues.lastIndexOf '}]'
-    results = currentissues.slice(jsonstartindex, jsonendindex) + '}]'
-    currentissues = JSON.parse results
-    grunt.log.writeln(currentissues.length + ' current issues')
-    grunt.log.write(grunt.file.read('vipscan.json')).ok()
+    # Known issues
+    known_issues = grunt.file.readJSON 'known-issues.json'
+    grunt.log.writeln(known_issues.length + ' known issues')
+    # Current issues
+    current_issues = grunt.file.read 'vipscan.json'
+    start = current_issues.indexOf '[{'
+    end = current_issues.lastIndexOf '}]'
+    current_issues_str = current_issues.slice(start, end) + '}]'
+    current_issues_json = JSON.parse current_issues_str
+    grunt.log.writeln(current_issues_json.length + ' current issues')
+    grunt.log.writeln current_issues_str
     # Display new issues
-    newissues = []
+    new_issues = []
     i = 0
-    while i < currentissues.length
-      add = true
-      j = 0
-      while j < knownissues.length
-        if currentissues[i].toString() == knownissues[j].toString()
-          add = false
-        j++
-      if add
-        newissues.push currentissues[i]
+    while i < current_issues_json.length
+      issue = current_issues_json[i]
+      if known_issues_string.indexOf(issue.toString()) < 0
+        new_issues.push issue
       i++
-    grunt.log.writeln(newissues.length + ' new issues:')
+    grunt.log.writeln(new_issues.length + ' new issues:')
     i = 0
-    while i < newissues.length
-      obj = newissues[i]
+    while i < new_issues.length
+      obj = new_issues[i]
       msg = obj.level + ': '
       msg += obj.description + '('
       msg += obj.lines.join(', ') + ')'
