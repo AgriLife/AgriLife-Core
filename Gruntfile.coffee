@@ -105,36 +105,47 @@ module.exports = (grunt) ->
     return
   @registerTask 'phpscan', 'Compare results of vip-scanner with known issues', ->
     done = @async()
+
+    # Ensure strings use the same HTML characters
+    unescape_html = (str) ->
+      str.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace /&gt;/g, '>'
+
     grunt.log.writeln('--- VIP Scanner Results ---')
     # Known issues
     known_issues = grunt.file.readJSON 'known-issues.json'
-    known_issues_string = grunt.file.read 'known-issues.json'
-    grunt.log.writeln(known_issues.length + ' known issues')
+    known_issues_string = JSON.stringify known_issues
+    known_issues_string = unescape_html known_issues_string
+    grunt.log.writeln(known_issues.length + ' known issues.')
+
     # Current issues
     current_issues = grunt.file.read 'vipscan.json'
     start = current_issues.indexOf '[{'
     end = current_issues.lastIndexOf '}]'
-    current_issues_str = current_issues.slice(start, end) + '}]'
-    current_issues_json = JSON.parse current_issues_str
-    grunt.log.writeln(current_issues_json.length + ' current issues')
-    grunt.log.writeln current_issues_str
-    # Display new issues
+    current_issues_string = current_issues.slice(start, end) + '}]'
+    current_issues_string = unescape_html current_issues_string
+    current_issues_json = JSON.parse current_issues_string
+    grunt.log.writeln(current_issues_json.length + ' current issues.')
+
+    # New issues
     new_issues = []
     i = 0
     while i < current_issues_json.length
       issue = current_issues_json[i]
-      if known_issues_string.indexOf(issue.toString()) < 0
+      issue_string = JSON.stringify issue
+      if known_issues_string.indexOf issue_string < 0
         new_issues.push issue
       i++
     grunt.log.writeln(new_issues.length + ' new issues:')
     i = 0
     while i < new_issues.length
       obj = new_issues[i]
-      msg = obj.level + ': '
-      msg += obj.description + '('
-      msg += obj.lines.join(', ') + ')'
-      msg += ' in ' + obj.file
-      grunt.log.writeln msg
+      grunt.log.writeln('Issue ' + i)
+
+      for (var key in obj)
+          if (obj.hasOwnProperty(key))
+              grunt.log.writeln(key + ': ' + obj[key])
+
+      grunt.log.writeln '------------------'
       i++
     return
 
