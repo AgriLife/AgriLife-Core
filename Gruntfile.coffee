@@ -114,8 +114,9 @@ module.exports = (grunt) ->
     jsonstartindex = currentissues.indexOf '[{'
     jsonendindex = currentissues.lastIndexOf '}]'
     results = currentissues.slice(jsonstartindex, jsonendindex) + '}]'
-    currentissues = JSON.parse(results)
+    currentissues = JSON.parse results
     grunt.log.writeln(currentissues.length + ' current issues')
+    grunt.log.write(grunt.file.read('vipscan.json')).ok()
     # Display new issues
     newissues = []
     i = 0
