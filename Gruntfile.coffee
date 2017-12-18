@@ -112,18 +112,18 @@ module.exports = (grunt) ->
 
     grunt.log.writeln('--- VIP Scanner Results ---')
     # Known issues
-    known_issues = grunt.file.readJSON 'known-issues.json'
-    known_issues_string = JSON.stringify known_issues
-    known_issues_string = unescape_html known_issues_string
+    known_issues = grunt.file.readJSON('known-issues.json')
+    known_issues_string = JSON.stringify(known_issues)
+    known_issues_string = unescape_html(known_issues_string)
     grunt.log.writeln(known_issues.length + ' known issues.')
 
     # Current issues
-    current_issues = grunt.file.read 'vipscan.json'
-    start = current_issues.indexOf '[{'
-    end = current_issues.lastIndexOf '}]'
+    current_issues = grunt.file.read('vipscan.json')
+    start = current_issues.indexOf('[{')
+    end = current_issues.lastIndexOf('}]')
     current_issues_string = current_issues.slice(start, end) + '}]'
-    current_issues_string = unescape_html current_issues_string
-    current_issues_json = JSON.parse current_issues_string
+    current_issues_string = unescape_html(current_issues_string)
+    current_issues_json = JSON.parse(current_issues_string)
     grunt.log.writeln(current_issues_json.length + ' current issues.')
 
     # New issues
@@ -131,9 +131,9 @@ module.exports = (grunt) ->
     i = 0
     while i < current_issues_json.length
       issue = current_issues_json[i]
-      issue_string = JSON.stringify issue
-      if known_issues_string.indexOf issue_string < 0
-        new_issues.push issue
+      issue_string = JSON.stringify(issue)
+      if known_issues_string.indexOf(issue_string) < 0
+        new_issues.push(issue)
       i++
     grunt.log.writeln(new_issues.length + ' new issues:')
     i = 0
@@ -142,7 +142,7 @@ module.exports = (grunt) ->
       grunt.log.writeln('Issue ' + i)
 
       for key in obj
-          if obj.hasOwnProperty key
+          if obj.hasOwnProperty(key)
               grunt.log.writeln(key + ': ' + obj[key])
 
       grunt.log.writeln '------------------'
