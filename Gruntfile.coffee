@@ -141,8 +141,8 @@ module.exports = (grunt) ->
       obj = new_issues[i]
       grunt.log.writeln('Issue ' + i)
 
-      for (var key in obj)
-          if (obj.hasOwnProperty(key))
+      for key in obj
+          if obj.hasOwnProperty key
               grunt.log.writeln(key + ': ' + obj[key])
 
       grunt.log.writeln '------------------'
