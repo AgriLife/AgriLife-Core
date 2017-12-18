@@ -138,15 +138,16 @@ module.exports = (grunt) ->
     grunt.log.writeln(known_issues.length + ' known issues.')
     grunt.log.writeln(current_issues_json.length + ' current issues.')
     grunt.log.writeln(new_issues.length + ' new issues:')
+      grunt.log.writeln '------------------'
     i = 0
     while i < new_issues.length
       obj = new_issues[i]
-      grunt.log.writeln('Issue ' + i)
 
       for key,value of obj
         if value != ''
           grunt.log.writeln(key + ': ' + value)
 
+      grunt.log.writeln('JSON format: ' + JSON.stringify(obj))
       grunt.log.writeln '------------------'
       i++
 
