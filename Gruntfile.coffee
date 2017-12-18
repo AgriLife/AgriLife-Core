@@ -110,12 +110,10 @@ module.exports = (grunt) ->
     unescape_html = (str) ->
       str.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace /&gt;/g, '>'
 
-    grunt.log.writeln('--- VIP Scanner Results ---')
     # Known issues
     known_issues = grunt.file.readJSON('known-issues.json')
     known_issues_string = JSON.stringify(known_issues)
     known_issues_string = unescape_html(known_issues_string)
-    grunt.log.writeln(known_issues.length + ' known issues.')
 
     # Current issues
     current_issues = grunt.file.read('vipscan.json')
@@ -124,7 +122,6 @@ module.exports = (grunt) ->
     current_issues_string = current_issues.slice(start, end) + '}]'
     current_issues_string = unescape_html(current_issues_string)
     current_issues_json = JSON.parse(current_issues_string)
-    grunt.log.writeln(current_issues_json.length + ' current issues.')
 
     # New issues
     new_issues = []
@@ -135,18 +132,24 @@ module.exports = (grunt) ->
       if known_issues_string.indexOf(issue_string) < 0
         new_issues.push(issue)
       i++
+
+    # Display issues information
+    grunt.log.writeln('--- VIP Scanner Results ---')
+    grunt.log.writeln(known_issues.length + ' known issues.')
+    grunt.log.writeln(current_issues_json.length + ' current issues.')
     grunt.log.writeln(new_issues.length + ' new issues:')
     i = 0
     while i < new_issues.length
       obj = new_issues[i]
       grunt.log.writeln('Issue ' + i)
 
-      for key in obj
-          if obj.hasOwnProperty(key)
-              grunt.log.writeln(key + ': ' + obj[key])
+      for key,value of obj
+        if value != ''
+          grunt.log.writeln(key + ': ' + value)
 
       grunt.log.writeln '------------------'
       i++
+
     return
 
   @event.on 'watch', (action, filepath) =>
