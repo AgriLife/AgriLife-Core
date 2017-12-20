@@ -73,7 +73,6 @@ module.exports = (grunt) ->
 
   @registerTask 'default', ['sasslint', 'compass:dev']
   @registerTask 'develop', ['compass:dev', 'sasslint', 'jshint']
-  @registerTask 'scan', ['shell']
   @registerTask 'package', ['compass:pkg']
   @registerTask 'release', ['compress', 'setreleasemsg', 'gh_release']
   @registerTask 'setreleasemsg', 'Set release message as range of commits', ->
