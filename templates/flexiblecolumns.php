@@ -163,7 +163,7 @@ function fc_repeating_content()
         // Add the row title
         $title = get_sub_field( 'columns_title' );
         if ( $title ){
-          $content .= '<div class="row"><div class="small-12 medium-12 large-12 columns"><h2>' . $title . '</h2></div></div>';
+          $content .= '<div class="small-12 medium-12 large-12 columns"><h2>' . $title . '</h2></div></div><div class="flexiblecolumns row">';
         }
 
         // Get the type of content to render
