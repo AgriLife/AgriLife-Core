@@ -22,6 +22,16 @@ class Deactivate {
 
 	}
 
+	protected function get_blog_ids() {
+
+		global $wpdb;
+
+		$blog_ids = $wpdb->get_col("select blog_id from $wpdb->blogs order by blog_id asc");
+
+		return $blog_ids;
+
+	}
+
 	/**
 	 * Fires activation commands for each site on the network
 	 * @since 1.0.0

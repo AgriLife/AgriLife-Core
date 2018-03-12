@@ -91,69 +91,75 @@ if ( function_exists( 'add_image_size' ) ) {
 }
 
 add_filter('image_size_names_choose', 'agrilife_core_image_sizes');
-function agrilife_core_image_sizes($sizes) {
-    $addsizes = array(
-        "landing-template-slider" => __( "Landing Template Slider"),
-        "landing-template-thumbnail" => __( "Landing Template Thumbnail"),
-        "template-flexcolumns-2" => __( "Flexible Columns Template: 2 Columns"),
-        "template-flexcolumns-3" => __( "Flexible Columns Template: 3 Columns")
-    );
-    $newsizes = array_merge($sizes, $addsizes);
-    return $newsizes;
+if( !function_exists('agrilife_core_image_sizes') ){
+    function agrilife_core_image_sizes($sizes) {
+        $addsizes = array(
+            "landing-template-slider" => __( "Landing Template Slider"),
+            "landing-template-thumbnail" => __( "Landing Template Thumbnail"),
+            "template-flexcolumns-2" => __( "Flexible Columns Template: 2 Columns"),
+            "template-flexcolumns-3" => __( "Flexible Columns Template: 3 Columns")
+        );
+        $newsizes = array_merge($sizes, $addsizes);
+        return $newsizes;
+    }
 }
 
 // Validate size of column images
 add_action( 'acf/validate_value/name=columnimage', 'ac_validate_image_sizes', 10, 4 );
-function ac_validate_image_sizes( $valid, $value, $field, $input ){
+if( !function_exists('ac_validate_image_sizes') ){
+    function ac_validate_image_sizes( $valid, $value, $field, $input ){
 
-    $regen = false;
-    $data = wp_get_attachment_metadata( $value, true );
+        $regen = false;
+        $data = wp_get_attachment_metadata( $value, true );
 
-    // Check for 2 column size
-    $key = array_key_exists( 'template-flexcolumns-2', $data['sizes'] );
-    $gen = preg_match( '/554x\d{1,4}\.\w{2,4}$/', $data['sizes']['template-flexcolumns-2']['file'] );
+        // Check for 2 column size
+        $key = array_key_exists( 'template-flexcolumns-2', $data['sizes'] );
+        $gen = preg_match( '/554x\d{1,4}\.\w{2,4}$/', $data['sizes']['template-flexcolumns-2']['file'] );
 
-    if( (!$key || !$gen) && $data['width'] >= 554 && $data['height'] >= 332 ) {
+        if( (!$key || !$gen) && $data['width'] >= 554 && $data['height'] >= 332 ) {
 
-        $regen = true;
+            $regen = true;
+
+        }
+
+        // Check for 3 column size
+        $key = array_key_exists( 'template-flexcolumns-3', $data['sizes'] );
+        $gen = preg_match( '/370x\d{1,4}\.\w{2,4}$/', $data['sizes']['template-flexcolumns-3']['file'] );
+
+        if( (!$key || !$gen) && $data['width'] >= 370 && $data['height'] >= 222 ) {
+
+            $regen = true;
+
+        }
+
+        if($regen){
+
+            // Regenerate thumbnail with custom image size
+            $fullsizepath = get_attached_file( $value );
+            $metadata = wp_generate_attachment_metadata( $value, $fullsizepath );
+            wp_update_attachment_metadata( $value, $metadata );
+
+        }
+
+        return $valid;
 
     }
-
-    // Check for 3 column size
-    $key = array_key_exists( 'template-flexcolumns-3', $data['sizes'] );
-    $gen = preg_match( '/370x\d{1,4}\.\w{2,4}$/', $data['sizes']['template-flexcolumns-3']['file'] );
-
-    if( (!$key || !$gen) && $data['width'] >= 370 && $data['height'] >= 222 ) {
-
-        $regen = true;
-
-    }
-
-    if($regen){
-
-        // Regenerate thumbnail with custom image size
-        $fullsizepath = get_attached_file( $value );
-        $metadata = wp_generate_attachment_metadata( $value, $fullsizepath );
-        wp_update_attachment_metadata( $value, $metadata );
-
-    }
-
-    return $valid;
-
 }
 
 add_filter( 'acf/fields/wysiwyg/toolbars' , 'agriflex_toolbars'  );
-function agriflex_toolbars( $toolbars )
-{
+if( !function_exists('agriflex_toolbars') ){
+    function agriflex_toolbars( $toolbars )
+    {
 
-    // Add new toolbars
+        // Add new toolbars
 
-    $toolbars['Simple Text'] = array();
-    $toolbars['Simple Text'][1] = array( 'bold' , 'italic', 'underline', 'link', 'unlink', 'alignleft', 'aligncenter', 'alignjustify', 'bullist', 'numlist' );
+        $toolbars['Simple Text'] = array();
+        $toolbars['Simple Text'][1] = array( 'bold' , 'italic', 'underline', 'link', 'unlink', 'alignleft', 'aligncenter', 'alignjustify', 'bullist', 'numlist' );
 
-    $toolbars['Simple Title'] = array();
-    $toolbars['Simple Title'][1] = array( 'bold' , 'italic', 'underline' );
+        $toolbars['Simple Title'] = array();
+        $toolbars['Simple Title'][1] = array( 'bold' , 'italic', 'underline' );
 
-    return $toolbars;
+        return $toolbars;
 
+    }
 }
