@@ -2,6 +2,10 @@ $headings: "5772d80e25f52";
 $images: "58349ad66ded1";
 $links: "58349cf9486f1";
 $descriptions: "58349be6486ee";
+$headings456: "5bd0c1f7a7224";
+$images456: "5bd0c237a7228";
+$links456: "5bd0c2dba722e";
+$descriptions456: "5bd0c31ba7232";
 
 // Cells plugin
 $cp-repeater: "597668026c785";
@@ -18,7 +22,8 @@ $cp-summary-wysiwyg: "59766d3c6c78c";
 					padding-top: 12px;
 				}
 
-				&.acf-field-#{$headings} > .acf-label {
+				&.acf-field-#{$headings} > .acf-label,
+				&.acf-field-#{$headings456} > .acf-label {
 					padding-top: 28px;
 				}
 
@@ -40,7 +45,10 @@ $cp-summary-wysiwyg: "59766d3c6c78c";
 			// Remove bottom spacing
 			.acf-field.acf-field-#{$headings},
 			.acf-field.acf-field-#{$images},
-			.acf-field.acf-field-#{$links} {
+			.acf-field.acf-field-#{$links},
+			.acf-field.acf-field-#{$headings456},
+			.acf-field.acf-field-#{$images456},
+			.acf-field.acf-field-#{$links456} {
 
 				td.acf-field {
 					padding-bottom: 0;
@@ -63,7 +71,10 @@ $cp-summary-wysiwyg: "59766d3c6c78c";
 			// Remove top spacing
 			.acf-field.acf-field-#{$images},
 			.acf-field.acf-field-#{$links},
-			.acf-field.acf-field-#{$descriptions} {
+			.acf-field.acf-field-#{$descriptions},
+			.acf-field.acf-field-#{$images456},
+			.acf-field.acf-field-#{$links456},
+			.acf-field.acf-field-#{$descriptions456} {
 				border-top-width: 0;
 
 				.acf-table,
@@ -79,7 +90,8 @@ $cp-summary-wysiwyg: "59766d3c6c78c";
 			}
 
 			// Image field changes
-			.acf-fields > .acf-field.acf-field-#{$images} .acf-table > tbody > tr > td {
+			.acf-fields > .acf-field.acf-field-#{$images} .acf-table > tbody > tr > td,
+			.acf-fields > .acf-field.acf-field-#{$images456} .acf-table > tbody > tr > td {
 				border-width: 0 0 0 0;
 
 				// Two column layout
@@ -129,7 +141,8 @@ $cp-summary-wysiwyg: "59766d3c6c78c";
 			display: none;
 		}
 		// Extend image borders to match height of notes
-		.acf-field.acf-field-#{$images} {
+		.acf-field.acf-field-#{$images},
+		.acf-field.acf-field-#{$images456} {
 			.acf-label, .acf-table {
 				$line-height: 16.8px;
 
