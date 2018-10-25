@@ -253,9 +253,21 @@ function fc_repeating_content()
 
           // Summarized content with headings, images, and/or descriptions
           $headings = get_sub_field( 'headings' )[0];
+          if($count == 6){
+            $headings = array_merge( $headings, get_sub_field( 'headings_456' )[0] );
+          }
           $descriptions = get_sub_field( 'descriptions' )[0];
+          if($count == 6){
+            $descriptions = array_merge( $descriptions, get_sub_field( 'descriptions_456' )[0] );
+          }
           $links = get_sub_field( 'links' )[0];
+          if($count == 6){
+            $links = array_merge( $links, get_sub_field( 'links_456' )[0] );
+          }
           $image_sub_field = get_sub_field( 'images' )[0];
+          if($count == 6){
+            $image_sub_field = array_merge( $image_sub_field, get_sub_field( 'images_456' )[0] );
+          }
           $images = array();
 
           // Remove unused fields
@@ -263,10 +275,17 @@ function fc_repeating_content()
             if($count == 2){
               $images['image1of2'] = $image_sub_field['image1of2'];
               $images['image2of2'] = $image_sub_field['image2of2'];
-            } else {
+            } else if($count == 3){
               $images['image1of3'] = $image_sub_field['image1of3'];
               $images['image2of3'] = $image_sub_field['image2of3'];
               $images['image3of3'] = $image_sub_field['image3of3'];
+            } else if($count == 6){
+              $images['image1of6'] = $image_sub_field['image1of3'];
+              $images['image2of6'] = $image_sub_field['image2of3'];
+              $images['image3of6'] = $image_sub_field['image3of3'];
+              $images['image4of6'] = $image_sub_field['image4of6'];
+              $images['image5of6'] = $image_sub_field['image5of6'];
+              $images['image6of6'] = $image_sub_field['image6of6'];
             }
           }
 
@@ -303,7 +322,7 @@ function fc_repeating_content()
             }
 
             if( $img != '' ){
-              $sizename = 'template-flexcolumns-' . $count;
+              $sizename = $count !== 6 ? 'template-flexcolumns-' . $count : 'template-flexcolumns-3';
               $img = sprintf( '<img src="%s" alt="%s"/>', $img['sizes'][$sizename], $img['alt'] );
               if( $link != '' )
                 $linkopen = str_replace('<a ', '<a class="flexible-columns-image-link" ', $linkopen);
