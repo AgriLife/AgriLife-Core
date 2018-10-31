@@ -18,7 +18,7 @@ class Children {
 			'echo' => 0,
 			'depth' => 0,
 			'child_of' => $post->ID,
-			'title' => ''
+			'title_li' => ''
 		);
 
 		$content = sprintf( '<ul class="children-shortcode">%s</ul>',
