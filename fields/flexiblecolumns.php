@@ -596,6 +596,13 @@ acf_add_local_field_group(array(
                                             array(
                                                 'field' => 'field_583499626ded0',
                                                 'operator' => '==',
+                                                'value' => '3',
+                                            ),
+                                        ),
+                                        array(
+                                            array(
+                                                'field' => 'field_583499626ded0',
+                                                'operator' => '==',
                                                 'value' => '6',
                                             ),
                                         ),
