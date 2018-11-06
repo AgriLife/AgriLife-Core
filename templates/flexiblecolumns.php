@@ -216,8 +216,6 @@ function fc_repeating_content()
               $img = sprintf( '<img src="%s" alt="%s"/>', $img['sizes'][$sizename], $img['alt'] );
               if( $link != '' )
                 $linkopen = str_replace('<a ', '<a class="flexible-columns-image-link" ', $linkopen);
-              if( $desc != '' )
-                $linkclose .= '<br>';
             }
 
             $content .= sprintf( '<div class="small-12 medium-%s large-%s columns summary">%s%s%s%s%s</div>', $cols, $cols, $linkopen, $heading, $img, $linkclose, $desc );
