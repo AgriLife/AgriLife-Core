@@ -71,6 +71,7 @@ class PeopleAPI {
 
 	    echo "<pre>Error occurred during curl exec.<br/>Additional info:<br/>";
 	    echo "Curl Response:<br/>";
+	    unset($curl_response['url']);
 	    print_r($curl_response);
 	    echo "Info:<br/>";
 	    print_r($info);
