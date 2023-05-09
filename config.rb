@@ -8,15 +8,14 @@ images_dir = "img"
 javascripts_dir = "js"
 fonts_dir = "font"
 
-# Can be :expanded, :nested, :compact or :compressed
-output_style = :compressed
+output_style = :expanded
+environment = :development
 
-# Allows relative paths to be used
 relative_assets = true
 
 # To disable debugging comments that display the original location of your selectors. Uncomment:
 # line_comments = false
-# color_output = false
+color_output = false
 
 
 # If you prefer the indented syntax, you might want to regenerate this

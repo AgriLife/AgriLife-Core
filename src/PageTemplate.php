@@ -99,24 +99,25 @@ class PageTemplate {
 	}
 
 	public function add_to_cache_templates( $templates ) {
-
 		$cache_key = 'page_templates-' . md5( get_theme_root() . '/' . get_stylesheet() );
+		$key_delete = 'agrilife_core';
 
 		if ( empty( $templates ) ) {
 			$templates = array();
 		}
 
-		wp_cache_delete( $cache_key, 'themes' );
+		wp_cache_delete( $cache_key, $key_delete );
 
 		$new_template = array( $this->file => $this->name );
 
 		$templates = array_merge( $templates, $new_template );
 
-		wp_cache_add( $cache_key, $templates, 'themes', 1800 );
+		wp_cache_add( $cache_key, $templates, $key_delete, 1800 );
 
 		return $templates;
-
 	}
+
+
 
 	public function add_to_cache( $atts ) {
 
