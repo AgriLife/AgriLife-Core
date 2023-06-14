@@ -4,6 +4,7 @@ namespace AgriLife\Core;
 
 class Assets {
 
+  // Register and enqueue scripts and styles
   public function __construct() {
 
     // Register admin scripts used in the theme

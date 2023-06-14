@@ -10,8 +10,10 @@
  * License: GPL2+
  */
 
+ // If this file is called directly, abort.
 require 'vendor/autoload.php';
 
+// Define plugin constants
 define( 'AG_CORE_DIRNAME', 'agrilife-core' );
 define( 'AG_CORE_DIR_PATH', plugin_dir_path( __FILE__ ) );
 define( 'AG_CORE_DIR_FILE', __FILE__ );
@@ -74,6 +76,7 @@ add_action( 'plugins_loaded', function() {
     }
 }, 15);
 
+// Add ACF dependency check
 add_action( 'admin_init', function(){
     if ( !class_exists( 'acf' ) ) {
         deactivate_plugins( plugin_basename( __FILE__ ) );
@@ -90,6 +93,7 @@ if ( function_exists( 'add_image_size' ) ) {
     add_image_size( 'template-flexcolumns-3', 370, 222, true );
 }
 
+// Add Image Size Options to Media Library
 add_filter('image_size_names_choose', 'agrilife_core_image_sizes');
 if( !function_exists('agrilife_core_image_sizes') ){
     function agrilife_core_image_sizes($sizes) {
@@ -146,6 +150,7 @@ if( !function_exists('ac_validate_image_sizes') ){
     }
 }
 
+// Add custom toolbars to WYSIWYG fields
 add_filter( 'acf/fields/wysiwyg/toolbars' , 'agriflex_toolbars'  );
 if( !function_exists('agriflex_toolbars') ){
     function agriflex_toolbars( $toolbars )
