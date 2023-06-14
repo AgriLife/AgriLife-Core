@@ -8,6 +8,7 @@ namespace AgriLife\Core;
  */
 class Activate {
 
+	// Run activation functions
 	public function run( $network_wide ) {
 
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
@@ -22,6 +23,7 @@ class Activate {
 
 	}
 
+	// Get all blog ids in the network
 	protected function get_blog_ids() {
 
 		global $wpdb;
